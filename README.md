@@ -1,5 +1,7 @@
 # trading-card-game
 
+Mob programming trading card game following these instructions : https://codingdojo.org/kata/TradingCardGame/
+
 ## Project setup
 ```
 yarn install
