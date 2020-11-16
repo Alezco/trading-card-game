@@ -1,10 +1,10 @@
 <template>
+<div class="player-item">
   <h2>Player {{ playerId }}</h2>
-  <div>Healthpoints: {{ health }}</div>
-  <div>Mana: {{ mana }}</div>
-  <div>Number of cards: {{ hand.length }}</div>
-  <br />
-  <Deck :deck="deck" />
+  <div class="player-item-description">
+    <span>Healthpoints:</span> {{ health }} <span>Mana:</span> {{ mana }} <span>Number of cards:</span> {{ hand.length }}</div>
+    <Deck :deck="deck" />
+</div>
 </template>
 
 <script>
@@ -24,3 +24,13 @@ export default {
 }
 </script>
 
+<style scoped>
+ .player-item-description {
+   display: inline-flex;
+   align-items: center;
+ }
+ .player-item-description span {
+    font-weight: bold;
+    padding-left: 8px;
+  }
+</style>

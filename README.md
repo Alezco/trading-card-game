@@ -24,3 +24,10 @@ yarn lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+
+### TODO
+- Ajouter la notion de tour (étapes, actions, etc...)
+- Ajouter ESLint
+- Afficher la main du joueur
+- Compléter la gestion de la pioche
