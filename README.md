@@ -28,6 +28,10 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ### TODO
 - Ajouter la notion de tour (étapes, actions, etc...)
+    - Continuer initRound
 - Ajouter ESLint
+- Ajouter TypeScript
 - Afficher la main du joueur
 - Compléter la gestion de la pioche
+- Ajouter des tests
+- Reflexion sur le format du mob programming

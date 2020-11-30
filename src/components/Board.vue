@@ -1,7 +1,7 @@
 <template>
   <h1>Trading Card game</h1>
   <div class="player-container">
-    <Player v-for="player in players"
+    <Player v-for="player in context.players"
             :health="player.health"
             :hand="player.hand"
             :mana="player.mana"
@@ -13,7 +13,7 @@
 
 <script>
 import Player from "@/components/Player";
-import {initBoard} from "@/handlers/GameHandler";
+import { initBoard, gameLoop } from "@/handlers/GameHandler";
 
 
 export default {
@@ -22,12 +22,12 @@ export default {
   },
   data: function() {
     return {
-      players: []
+      context: {}
     }
   },
   mounted: function() {
-    const {players} = initBoard()
-    this.players = players
+    this.context = initBoard();
+    gameLoop(this.context);
   }
 }
 </script>
