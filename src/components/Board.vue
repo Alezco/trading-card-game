@@ -13,7 +13,7 @@
 
 <script>
 import Player from "@/components/Player";
-import { initBoard, gameLoop } from "@/handlers/GameHandler";
+import { initBoard, initRound, playerActions, endRound } from "@/handlers/GameHandler";
 
 
 export default {
@@ -27,7 +27,10 @@ export default {
   },
   mounted: function() {
     this.context = initBoard();
-    gameLoop(this.context);
+    // this.context = gameLoop(this.context);
+    this.context = initRound(this.context);
+    this.context = playerActions(this.context);
+    this.context = endRound(this.context);
   }
 }
 </script>

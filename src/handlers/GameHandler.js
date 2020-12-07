@@ -19,43 +19,54 @@ const drawCard = player => {
     }
 }
 
-const firstDraw = players => {
-    return players.map( player => {
-        player = drawCard(player);
-        player = drawCard(player);
-        player = drawCard(player);
 
-        return player;
-    })
-}
+const handleHand = context => {
 
-const initRound = context => {
-    const players = 0 === context.round ? firstDraw(context.players) : players.map( player => drawCard(player) ); // Last line added
+    const {players} = context;
 
     return {
         ...context,
-        players
+        players: players.map( player => drawCard(player))
     };
 }
 
-const playerActions = context => {
+const handleMana = context => {
+    // TODO: handle mana
     return context;
 }
 
-const endRound = context => {
+export const initRound = context => {
+    let newContext = context;
+    
+    newContext = handleHand(context);
+    newContext = handleMana(context);
+
+    return newContext;
+    
+}
+
+export const playerActions = context => {
     return context;
 }
 
-const steps = [
-    initRound,
-    playerActions,
-    endRound
-]
-
-export const gameLoop = context => {
-    let finalContext;
-
-    steps.forEach( step => finalContext = step(context) );  
-
-    return finalContext;
+export const endRound = context => {
+    return context;
 }
+
+// const steps = [
+//     initRound,
+//     playerActions,
+//     endRound
+// ]
+
+// export const gameLoop = context => {
+//     let finalContext;
+
+//     steps.forEach( step => {
+//         console.log('before step', finalContext);
+//         finalContext = step(context)
+//         console.log('after', finalContext);
+//     } );  
+
+//     return finalContext;
+// }
