@@ -19,7 +19,6 @@ const drawCard = player => {
     }
 }
 
-
 const handleHand = context => {
 
     const {players} = context;
