@@ -1,56 +1,66 @@
-import {createPlayer} from "@/models/Player";
+import { createPlayer } from "@/models/Player";
 
 export const initBoard = () => {
-    const player1 = createPlayer("Pablo");
-    const player2 = createPlayer("Yannick");
+  const player1 = createPlayer("Pablo");
+  const player2 = createPlayer("Yannick");
 
-    return {
-        round: 0,
-        players:[player1, player2]
+  return {
+    round: 0,
+    players: [player1, player2],
+  };
+};
+
+export const drawCard = (player) => {
+  let newPlayer;
+  if (player.deck.length === 0) {
+    newPlayer = { ...player, health: player.health - 1 };
+  } else if (player.hand.length === 5) {
+    const [, ...newDeck] = player.deck;
+    newPlayer = {
+      ...player,
+      deck: newDeck,
     };
-}
-
-const drawCard = player => {
-    const [drawnCard,...newDeck] = player.deck
-    return {
-        ...player,
-        deck: newDeck,
-        hand: [...player.hand, drawnCard]
-    }
-}
-
-const handleHand = context => {
-
-    const {players} = context;
-
-    return {
-        ...context,
-        players: players.map( player => drawCard(player))
+  } else {
+    const [drawnCard, ...newDeck] = player.deck;
+    newPlayer = {
+      ...player,
+      deck: newDeck,
+      hand: [...player.hand, drawnCard],
     };
-}
+  }
+  return newPlayer;
+};
 
-const handleMana = context => {
-    // TODO: handle mana
-    return context;
-}
+const handleHand = (context) => {
+  const { players } = context;
 
-export const initRound = context => {
-    let newContext = context;
-    
-    newContext = handleHand(context);
-    newContext = handleMana(context);
+  return {
+    ...context,
+    players: players.map((player) => drawCard(player)),
+  };
+};
 
-    return newContext;
-    
-}
+const handleMana = (context) => {
+  // TODO: handle mana
+  return context;
+};
 
-export const playerActions = context => {
-    return context;
-}
+export const initRound = (context) => {
+  let newContext = context;
 
-export const endRound = context => {
-    return context;
-}
+  newContext = handleHand(context);
+  newContext = handleMana(context);
+
+  return newContext;
+};
+
+export const playerActions = (context) => {
+  return context;
+};
+
+export const endRound = (context) => {
+  return context;
+};
 
 // const steps = [
 //     initRound,
@@ -65,7 +75,7 @@ export const endRound = context => {
 //         console.log('before step', finalContext);
 //         finalContext = step(context)
 //         console.log('after', finalContext);
-//     } );  
+//     } );
 
 //     return finalContext;
 // }
