@@ -1,4 +1,5 @@
 import { createPlayer } from "@/models/Player";
+import { isDrawable, isDeckEmpty, isHandFull } from "../utils/player";
 
 export const initBoard = () => {
   const player1 = createPlayer("Pablo");
@@ -10,24 +11,36 @@ export const initBoard = () => {
   };
 };
 
+const getNewPlayerWithPenalties = (player) => {
+    if (isDeckEmpty(player)) {
+      return { ...player, health: player.health - 1 };
+    } 
+    
+    if (isHandFull(player)) {
+      const [, ...newDeck] = player.deck;
+      return {
+        ...player,
+        deck: newDeck,
+      };
+    }
+
+    return player;
+};
+
 export const drawCard = (player) => {
   let newPlayer;
-  if (player.deck.length === 0) {
-    newPlayer = { ...player, health: player.health - 1 };
-  } else if (player.hand.length === 5) {
-    const [, ...newDeck] = player.deck;
-    newPlayer = {
-      ...player,
-      deck: newDeck,
-    };
-  } else {
+
+  if (isDrawable(player)) {
     const [drawnCard, ...newDeck] = player.deck;
     newPlayer = {
       ...player,
       deck: newDeck,
       hand: [...player.hand, drawnCard],
     };
+  } else {
+    newPlayer = getNewPlayerWithPenalties(player);
   }
+
   return newPlayer;
 };
 
