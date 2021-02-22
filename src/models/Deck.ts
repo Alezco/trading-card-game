@@ -1,7 +1,7 @@
-import { createCard } from "@/models/Card";
+import { Card, createCard } from "@/models/Card";
 import { shuffle } from "@/utils/arrays";
 
-const cards = [
+const cards: Deck = [
   { id: "Hassan", mana: 0 },
   { id: "Benjamin", mana: 0 },
   { id: "Matthias", mana: 1 },
@@ -24,6 +24,8 @@ const cards = [
   { id: "Marianne", mana: 8 }
 ];
 
-export const createDeck = () => {
+export type Deck = Card[];
+
+export const createDeck = (): Deck => {
   return shuffle(cards.map(card => createCard(card.id, card.mana)));
 };
