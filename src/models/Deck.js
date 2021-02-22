@@ -21,9 +21,9 @@ const cards = [
   { id: "JC", mana: 6 },
   { id: "Jordan", mana: 6 },
   { id: "Mike", mana: 7 },
-  { id: "Marianne", mana: 8 },
+  { id: "Marianne", mana: 8 }
 ];
 
 export const createDeck = () => {
-  return shuffle(cards.map((card) => createCard(card.id, card.mana)));
+  return shuffle(cards.map(card => createCard(card.id, card.mana)));
 };

@@ -1,20 +1,26 @@
 <template>
   <h1>Trading Card game</h1>
   <div class="player-container">
-    <Player v-for="player in context.players"
-            :health="player.health"
-            :hand="player.hand"
-            :mana="player.mana"
-            :key="player.id"
-            :playerId="player.id"
-            :deck="player.deck"/>
+    <Player
+      v-for="player in context.players"
+      :health="player.health"
+      :hand="player.hand"
+      :mana="player.mana"
+      :key="player.id"
+      :playerId="player.id"
+      :deck="player.deck"
+    />
   </div>
 </template>
 
 <script>
-import Player from "@/components/Player";
-import { initBoard, initRound, playerActions, endRound } from "@/handlers/GameHandler";
-
+import Player from "./Player.vue";
+import {
+  initBoard,
+  initRound,
+  playerActions,
+  endRound
+} from "@/handlers/GameHandler";
 
 export default {
   components: {
@@ -23,7 +29,7 @@ export default {
   data: function() {
     return {
       context: {}
-    }
+    };
   },
   mounted: function() {
     this.context = initBoard();
@@ -32,14 +38,13 @@ export default {
     this.context = playerActions(this.context);
     this.context = endRound(this.context);
   }
-}
+};
 </script>
 
-
 <style scoped>
-  .player-container {
-    display:flex;
-    flex-direction: row;
-    justify-content: space-around;
-  }
+.player-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
 </style>

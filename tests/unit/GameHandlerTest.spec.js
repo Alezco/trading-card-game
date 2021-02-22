@@ -19,7 +19,7 @@ describe("GameHandler", () => {
         health: 30,
         mana: 0,
         hand: [],
-        deck: [{ id: "foo", mana: 2 }],
+        deck: [{ id: "foo", mana: 2 }]
       };
       const updatedPlayer = drawCard(player);
       expect(updatedPlayer.hand.length).toBe(1);
@@ -32,7 +32,7 @@ describe("GameHandler", () => {
         health: 30,
         mana: 0,
         hand: [],
-        deck: [],
+        deck: []
       };
       const newPlayer = drawCard(player);
       expect(newPlayer.health).toBe(29);
@@ -52,9 +52,9 @@ describe("GameHandler", () => {
           { id: "2", mana: 5 },
           { id: "3", mana: 1 },
           { id: "4", mana: 0 },
-          { id: "5", mana: 1 },
+          { id: "5", mana: 1 }
         ],
-        deck: [{ id: "6", mana: 8 }],
+        deck: [{ id: "6", mana: 8 }]
       };
       const newPlayer = drawCard(player);
       expect(newPlayer.hand.length).toBe(5);

@@ -1,5 +1,5 @@
 import { createPlayer } from "@/models/Player";
-import { isDrawable, isDeckEmpty, isHandFull } from "../utils/player";
+import { isDrawable, isDeckEmpty, isHandFull } from "@/utils/player";
 
 export const initBoard = () => {
   const player1 = createPlayer("Pablo");
@@ -7,27 +7,27 @@ export const initBoard = () => {
 
   return {
     round: 0,
-    players: [player1, player2],
+    players: [player1, player2]
   };
 };
 
-const getNewPlayerWithPenalties = (player) => {
-    if (isDeckEmpty(player)) {
-      return { ...player, health: player.health - 1 };
-    } 
-    
-    if (isHandFull(player)) {
-      const [, ...newDeck] = player.deck;
-      return {
-        ...player,
-        deck: newDeck,
-      };
-    }
+const getNewPlayerWithPenalties = player => {
+  if (isDeckEmpty(player)) {
+    return { ...player, health: player.health - 1 };
+  }
 
-    return player;
+  if (isHandFull(player)) {
+    const [, ...newDeck] = player.deck;
+    return {
+      ...player,
+      deck: newDeck
+    };
+  }
+
+  return player;
 };
 
-export const drawCard = (player) => {
+export const drawCard = player => {
   let newPlayer;
 
   if (isDrawable(player)) {
@@ -35,7 +35,7 @@ export const drawCard = (player) => {
     newPlayer = {
       ...player,
       deck: newDeck,
-      hand: [...player.hand, drawnCard],
+      hand: [...player.hand, drawnCard]
     };
   } else {
     newPlayer = getNewPlayerWithPenalties(player);
@@ -44,21 +44,21 @@ export const drawCard = (player) => {
   return newPlayer;
 };
 
-const handleHand = (context) => {
+const handleHand = context => {
   const { players } = context;
 
   return {
     ...context,
-    players: players.map((player) => drawCard(player)),
+    players: players.map(player => drawCard(player))
   };
 };
 
-const handleMana = (context) => {
+const handleMana = context => {
   // TODO: handle mana
   return context;
 };
 
-export const initRound = (context) => {
+export const initRound = context => {
   let newContext = context;
 
   newContext = handleHand(context);
@@ -67,11 +67,11 @@ export const initRound = (context) => {
   return newContext;
 };
 
-export const playerActions = (context) => {
+export const playerActions = context => {
   return context;
 };
 
-export const endRound = (context) => {
+export const endRound = context => {
   return context;
 };
 

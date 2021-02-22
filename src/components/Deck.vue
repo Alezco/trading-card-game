@@ -1,11 +1,11 @@
 <template>
-  <div v-for="card in deck" :key="card.id">{{card.id}}: {{card.mana}}</div>
+  <div v-for="card in deck" :key="card.id">{{ card.id }}: {{ card.mana }}</div>
 </template>
 
-<script>
+<script lang="ts">
 export default {
   props: {
-    deck: Array,
+    deck: Array
   }
-}
+};
 </script>
