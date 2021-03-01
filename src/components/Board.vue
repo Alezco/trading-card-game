@@ -1,5 +1,7 @@
 <template>
   <h1>Trading Card game</h1>
+  <h4>Round: {{ context.round }}</h4>
+  <button @click="nextRound()">TEST</button>
   <div class="player-container">
     <Player
       v-for="player in context.players"
@@ -13,32 +15,30 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import Player from "./Player.vue";
-import {
-  initBoard,
-  initRound,
-  playerActions,
-  endRound
-} from "@/handlers/GameHandler";
+import { gameLoop, initBoard } from "@/handlers/GameHandler";
+import { Context } from "@/types/types";
+import { defineComponent } from "vue";
 
-export default {
+export default defineComponent({
   components: {
     Player
   },
-  data: function() {
+  data() {
     return {
-      context: {}
+      context: {} as Context
     };
   },
   mounted: function() {
     this.context = initBoard();
-    // this.context = gameLoop(this.context);
-    this.context = initRound(this.context);
-    this.context = playerActions(this.context);
-    this.context = endRound(this.context);
+  },
+  methods: {
+    nextRound() {
+      gameLoop(this.context);
+    }
   }
-};
+});
 </script>
 
 <style scoped>

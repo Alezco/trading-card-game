@@ -2,6 +2,9 @@ import { createDeck, Deck } from "@/models/Deck";
 import { createHand } from "@/models/Hand";
 import { Card } from "./Card";
 
+const MAX_HEALTH = 30;
+const START_MANA = 0;
+
 export type Player = {
   id: string;
   health: number;
@@ -16,8 +19,8 @@ export const createPlayer = (id: string): Player => {
 
   return {
     id,
-    health: 30,
-    mana: 0,
+    health: MAX_HEALTH,
+    mana: START_MANA,
     hand,
     deck: newDeck
   };

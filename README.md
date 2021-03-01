@@ -27,10 +27,10 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 
 ### TODO
-- Déplacer les fichiers du projet js vers le projet ts
-- Ajouter des tests
+- Passer Board.vue en Vue 3
 - Ajouter la notion de tour (étapes, actions, etc...)
     - Continuer initRound
 - Afficher la main du joueur
 - Compléter la gestion de la pioche
-- Reflexion sur le format du mob programming
+- Mettre le projet sur GitHub Pages
+- Ajouter des GitHub Actions

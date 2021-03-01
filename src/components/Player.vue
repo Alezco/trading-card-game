@@ -2,19 +2,21 @@
   <div class="player-item">
     <h2>Player {{ playerId }}</h2>
     <div class="player-item-description">
-      <span>Healthpoints:</span> {{ health }} <span>Mana:</span> {{ mana }}
-      <span>Number of cards:</span> {{ hand.length }}
+      <span>Healthpoints: </span> {{ health }} <span>Mana: </span> {{ mana }}
+      <span>Deck: </span>
+      {{ deck.length }} cards
     </div>
-    <Deck :deck="deck" />
+    <Hand :hand="hand" />
   </div>
 </template>
 
 <script lang="ts">
-import Deck from "./Deck.vue";
+import Hand from "./Hand.vue";
+import { defineComponent } from "vue";
 
-export default {
+export default defineComponent({
   components: {
-    Deck
+    Hand
   },
   props: {
     playerId: String,
@@ -23,7 +25,7 @@ export default {
     hand: Array,
     deck: Array
   }
-};
+});
 </script>
 
 <style scoped>

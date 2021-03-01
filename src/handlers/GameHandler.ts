@@ -1,17 +1,18 @@
-import { createPlayer } from "@/models/Player";
+import { createPlayer, Player } from "@/models/Player";
 import { isDrawable, isDeckEmpty, isHandFull } from "@/utils/player";
+import { Context } from "@/types/types";
 
-export const initBoard = () => {
+export const initBoard = (): Context => {
   const player1 = createPlayer("Pablo");
   const player2 = createPlayer("Yannick");
 
   return {
-    round: 0,
+    round: 1,
     players: [player1, player2]
   };
 };
 
-const getNewPlayerWithPenalties = player => {
+const getNewPlayerWithPenalties = (player: Player): Player => {
   if (isDeckEmpty(player)) {
     return { ...player, health: player.health - 1 };
   }
@@ -27,7 +28,7 @@ const getNewPlayerWithPenalties = player => {
   return player;
 };
 
-export const drawCard = player => {
+export const drawCard = (player: Player): Player => {
   let newPlayer;
 
   if (isDrawable(player)) {
@@ -44,7 +45,7 @@ export const drawCard = player => {
   return newPlayer;
 };
 
-const handleHand = context => {
+const handleHand = (context: Context): Context => {
   const { players } = context;
 
   return {
@@ -53,12 +54,12 @@ const handleHand = context => {
   };
 };
 
-const handleMana = context => {
+const handleMana = (context: Context): Context => {
   // TODO: handle mana
   return context;
 };
 
-export const initRound = context => {
+export const initRound = (context: Context): Context => {
   let newContext = context;
 
   newContext = handleHand(context);
@@ -67,28 +68,24 @@ export const initRound = context => {
   return newContext;
 };
 
-export const playerActions = context => {
+export const playerActions = (context: Context): Context => {
   return context;
 };
 
-export const endRound = context => {
+export const endRound = (context: Context): Context => {
   return context;
 };
 
-// const steps = [
-//     initRound,
-//     playerActions,
-//     endRound
-// ]
+const steps = [initRound, playerActions, endRound];
 
-// export const gameLoop = context => {
-//     let finalContext;
+export const gameLoop = (context: Context): Context => {
+  let finalContext;
 
-//     steps.forEach( step => {
-//         console.log('before step', finalContext);
-//         finalContext = step(context)
-//         console.log('after', finalContext);
-//     } );
+  steps.forEach(step => {
+    console.log("before step", finalContext);
+    finalContext = step(context);
+    console.log("after", finalContext);
+  });
 
-//     return finalContext;
-// }
+  return finalContext;
+};
