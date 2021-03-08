@@ -1,6 +1,13 @@
 import { createPlayer, Player } from "@/models/Player";
-import { isDrawable, isDeckEmpty, isHandFull } from "@/utils/player";
+import {
+  isDrawable,
+  isDeckEmpty,
+  isHandFull,
+  getPlayerById
+} from "@/utils/player";
 import { Context } from "@/types/types";
+
+const MAX_MANA = 10;
 
 export const initBoard = (): Context => {
   const player1 = createPlayer("Pablo");
@@ -8,7 +15,8 @@ export const initBoard = (): Context => {
 
   return {
     round: 1,
-    players: [player1, player2]
+    players: [player1, player2],
+    activePlayerId: player1.id
   };
 };
 
@@ -55,8 +63,15 @@ const handleHand = (context: Context): Context => {
 };
 
 const handleMana = (context: Context): Context => {
-  // TODO: handle mana
-  return context;
+  const activePlayer = getPlayerById(context.players, context.activePlayerId);
+  const newPlayer = {
+    ...activePlayer,
+    mana: activePlayer?.mana ? activePlayer?.mana + 1 : null
+  };
+  return {
+    ...context,
+    players: [] // remplacer par 2 var de players car que 2 players
+  };
 };
 
 export const initRound = (context: Context): Context => {

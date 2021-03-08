@@ -1,7 +1,7 @@
 <template>
   <h1>Trading Card game</h1>
   <h4>Round: {{ context.round }}</h4>
-  <button @click="nextRound()">TEST</button>
+  <button @click="nextRound()">Fin du tour</button>
   <div class="player-container">
     <Player
       v-for="player in context.players"

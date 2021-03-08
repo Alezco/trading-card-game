@@ -8,3 +8,7 @@ export const isHandFull = (player: Player): boolean =>
   player.hand.length === MAX_HAND_SIZE;
 export const isDrawable = (player: Player): boolean =>
   !isDeckEmpty(player) && !isHandFull(player);
+
+export const getPlayerById = (players: Player[], id: string): Player | null => {
+  return players.find(player => player.id === id) || null;
+};

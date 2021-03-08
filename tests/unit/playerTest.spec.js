@@ -1,4 +1,9 @@
-import { isDeckEmpty, isDrawable, isHandFull } from "@/utils/player";
+import {
+  isDeckEmpty,
+  isDrawable,
+  isHandFull,
+  getPlayerById
+} from "@/utils/player";
 
 describe("Player utils", () => {
   describe("isDeckEmpty", () => {
@@ -89,6 +94,64 @@ describe("Player utils", () => {
         deck: []
       };
       expect(isDrawable(player)).toBeFalsy();
+    });
+  });
+
+  describe("getPlayerById", () => {
+    it("should return player when correct id is given", () => {
+      const player1 = {
+        id: "Pablo",
+        health: 30,
+        mana: 0,
+        hand: [
+          { id: "Hassan", mana: 1 },
+          { id: "Benjamin", mana: 0 },
+          { id: "Benji", mana: 5 }
+        ],
+        deck: [{ id: "Benjamin", mana: 0 }]
+      };
+      const player2 = {
+        id: "Yannick",
+        health: 30,
+        mana: 0,
+        hand: [
+          { id: "Hassan", mana: 1 },
+          { id: "Benjamin", mana: 0 },
+          { id: "Benji", mana: 5 }
+        ],
+        deck: [{ id: "Hassan", mana: 1 }]
+      };
+      const players = [player1, player2];
+
+      expect(getPlayerById(players, "Pablo")).toBe(player1);
+    });
+
+    it("should return null when incorrect id is given", () => {
+      const player1 = {
+        id: "Pablo",
+        health: 30,
+        mana: 0,
+        hand: [
+          { id: "Hassan", mana: 1 },
+          { id: "Benjamin", mana: 0 },
+          { id: "Benji", mana: 5 }
+        ],
+        deck: [{ id: "Benjamin", mana: 0 }]
+      };
+      const player2 = {
+        id: "Yannick",
+        health: 30,
+        mana: 0,
+        hand: [
+          { id: "Hassan", mana: 1 },
+          { id: "Benjamin", mana: 0 },
+          { id: "Benji", mana: 5 }
+        ],
+        deck: [{ id: "Hassan", mana: 1 }]
+      };
+      const players = [player1, player2];
+
+      expect(getPlayerById(players, "pasUnID")).toBe(null);
     });
   });
 });

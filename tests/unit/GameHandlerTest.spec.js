@@ -5,7 +5,7 @@ describe("GameHandler", () => {
     it("should return a correct correct context", () => {
       const context = initBoard();
 
-      expect(context.round).toBe(0);
+      expect(context.round).toBe(1);
       expect(context.players.length).toBe(2);
       expect(typeof context.players[0]).toBe("object");
       expect(typeof context.players[1]).toBe("object");
