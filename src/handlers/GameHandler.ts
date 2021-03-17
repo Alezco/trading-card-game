@@ -3,7 +3,8 @@ import {
   isDrawable,
   isDeckEmpty,
   isHandFull,
-  getPlayerById
+  getPlayerById,
+  getNextPlayer
 } from "@/utils/player";
 import { Context } from "@/types/types";
 
@@ -53,34 +54,30 @@ export const drawCard = (player: Player): Player => {
   return newPlayer;
 };
 
-const handleHand = (context: Context): Context => {
-  const { players } = context;
-
-  return {
-    ...context,
-    players: players.map(player => drawCard(player))
-  };
+const handleHand = (player: Player): Player => {
+  return drawCard(player);
 };
 
-const handleMana = (context: Context): Context => {
-  const activePlayer = getPlayerById(context.players, context.activePlayerId);
+const handleMana = (player: Player): Player => {
   const newPlayer = {
-    ...activePlayer,
-    mana: activePlayer?.mana ? activePlayer?.mana + 1 : null
+    ...player,
+    mana: player.mana < MAX_MANA ? player.mana + 1 : MAX_MANA
   };
-  return {
-    ...context,
-    players: [] // remplacer par 2 var de players car que 2 players
-  };
+
+  return newPlayer;
 };
 
 export const initRound = (context: Context): Context => {
-  let newContext = context;
+  const previousPlayer = getPlayerById(context.players, context.activePlayerId);
+  let nextPlayer = getNextPlayer(context.players, context.activePlayerId); // TODO : Utiliser previousPlayer pour récupérer le nextPlayer ?
 
-  newContext = handleHand(context);
-  newContext = handleMana(context);
+  nextPlayer = handleHand(nextPlayer);
+  nextPlayer = handleMana(nextPlayer);
 
-  return newContext;
+  return {
+    ...context,
+    players: [previousPlayer, nextPlayer]
+  };
 };
 
 export const playerActions = (context: Context): Context => {
