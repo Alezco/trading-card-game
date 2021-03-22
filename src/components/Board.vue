@@ -11,6 +11,7 @@
       :key="player.id"
       :playerId="player.id"
       :deck="player.deck"
+      :context="context"
     />
   </div>
 </template>

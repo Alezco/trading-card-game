@@ -6,7 +6,8 @@ import {
   getPlayerById,
   getNextPlayer
 } from "@/utils/player";
-import { Context } from "@/types/types";
+import { Context, Steps } from "@/types/types";
+import { Card } from "@/models/Card";
 
 const MAX_MANA = 10;
 
@@ -67,6 +68,10 @@ const handleMana = (player: Player): Player => {
   return newPlayer;
 };
 
+export const handleAction = (card: Card) => {
+  console.log(`La carte ${card.id} à été jouée`);
+};
+
 export const initRound = (context: Context): Context => {
   const previousPlayer = getPlayerById(context.players, context.activePlayerId);
   let nextPlayer = getNextPlayer(context.players, context.activePlayerId); // TODO : Utiliser previousPlayer pour récupérer le nextPlayer ?
@@ -88,16 +93,33 @@ export const endRound = (context: Context): Context => {
   return context;
 };
 
-const steps = [initRound, playerActions, endRound];
+const steps: Steps = {
+  initRound: {
+    label: "initRound",
+    method: initRound
+  },
+  playerActions: {
+    label: "playerActions",
+    method: playerActions
+  },
+  endRound: {
+    label: "endRound",
+    method: endRound
+  }
+};
 
 export const gameLoop = (context: Context): Context => {
   let finalContext;
 
-  steps.forEach(step => {
+  // TODO: refaceto steps[step];
+  for (const step in steps) {
+    if (!Object.prototype.hasOwnProperty.call(steps, step)) {
+      return;
+    }
     console.log("before step", finalContext);
-    finalContext = step(context);
+    finalContext = steps[step].method(context);
     console.log("after", finalContext);
-  });
+  }
 
   return finalContext;
 };
