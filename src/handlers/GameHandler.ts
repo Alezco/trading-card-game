@@ -68,8 +68,16 @@ const handleMana = (player: Player): Player => {
   return newPlayer;
 };
 
-export const handleAction = (card: Card) => {
-  console.log(`La carte ${card.id} à été jouée`);
+export const handleAction = (
+  context: Context,
+  card: Card,
+  playerId: string
+) => {
+  if (playerId === context.activePlayerId) {
+    console.log(`La carte ${card.id} à été jouée`);
+  } else {
+    console.log("ISSOU C'EST PAS A TOI");
+  }
 };
 
 export const initRound = (context: Context): Context => {
@@ -111,15 +119,13 @@ const steps: Steps = {
 export const gameLoop = (context: Context): Context => {
   let finalContext;
 
-  // TODO: refaceto steps[step];
-  for (const step in steps) {
-    if (!Object.prototype.hasOwnProperty.call(steps, step)) {
-      return;
-    }
+  Object.values(steps).forEach(({ label: stepLabel, method: stepMethod }) => {
+    console.log(`--------------------${stepLabel}---------------------`);
     console.log("before step", finalContext);
-    finalContext = steps[step].method(context);
-    console.log("after", finalContext);
-  }
+    finalContext = stepMethod(context);
+    console.log("after step", finalContext);
+    console.log(`--------------------/${stepLabel}---------------------`);
+  });
 
   return finalContext;
 };

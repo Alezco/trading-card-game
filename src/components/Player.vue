@@ -6,13 +6,14 @@
       <span>Deck: </span>
       {{ deck.length }} cards
     </div>
-    <Hand :hand="hand" />
+    <Hand :hand="hand" :playerId="playerId" :context="context" />
   </div>
 </template>
 
 <script lang="ts">
 import Hand from "./Hand.vue";
-import { defineComponent } from "vue";
+import { defineComponent, PropType } from "vue";
+import { Context } from "@/types/types";
 
 export default defineComponent({
   components: {
@@ -23,7 +24,8 @@ export default defineComponent({
     health: Number,
     mana: Number,
     hand: Array,
-    deck: Array
+    deck: Array,
+    context: Object as PropType<Context>
   }
 });
 </script>

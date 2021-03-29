@@ -1,5 +1,7 @@
 import { Player } from "@/models/Player";
 
+export type StepLabel = "initRound" | "playerActions" | "endRound";
+
 export type Context = {
   round: number;
   players: Player[];
@@ -7,7 +9,7 @@ export type Context = {
 };
 
 export type Step = {
-  label: string;
+  label: StepLabel;
   method: (context: Context) => Context;
 };
 

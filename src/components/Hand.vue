@@ -5,16 +5,19 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, PropType } from "vue";
 import { handleAction } from "@/handlers/GameHandler";
+import { Context } from "@/types/types";
 
 export default defineComponent({
   props: {
-    hand: Array
+    hand: Array,
+    playerId: String,
+    context: Object as PropType<Context>
   },
   methods: {
     handleAction(card) {
-      handleAction(card);
+      handleAction(this.context, card, this.playerId);
     }
   }
 });
