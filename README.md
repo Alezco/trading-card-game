@@ -34,3 +34,5 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 - Compléter la gestion de la pioche
 - Mettre le projet sur GitHub Pages
 - Ajouter des GitHub Actions
+- Ajouter un back-end
+- Ajouter un système de classement
