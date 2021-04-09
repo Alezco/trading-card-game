@@ -1,4 +1,4 @@
-import { initBoard, drawCard } from "@/handlers/GameHandler";
+import { initBoard, drawCard, handleAction } from "@/handlers/GameHandler";
 
 describe("GameHandler", () => {
   describe("initBoard", () => {
@@ -9,6 +9,37 @@ describe("GameHandler", () => {
       expect(context.players.length).toBe(2);
       expect(typeof context.players[0]).toBe("object");
       expect(typeof context.players[1]).toBe("object");
+    });
+  });
+
+  describe("handleAction", () => {
+    const player = {
+      id: "Hassan",
+      health: 30,
+      mana: 5,
+      hand: [
+        { id: "foooo", mana: 2 },
+        { id: "fooo", mana: 5 }
+      ],
+      deck: [{ id: "foo", mana: 2 }]
+    };
+
+    const player2 = {
+      id: "Hassan2",
+      health: 30,
+      mana: 7,
+      hand: [],
+      deck: [{ id: "foo", mana: 2 }]
+    };
+    const context = {
+      round: 1,
+      players: [player, player2],
+      activePlayerId: "Hassan"
+    };
+
+    it("should remove card from hand", () => {
+      handleAction(context, player.hand[0], "Hassan");
+      // à toi de jouer ;)
     });
   });
 

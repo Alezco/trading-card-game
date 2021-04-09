@@ -34,6 +34,11 @@ export default defineComponent({
   mounted: function() {
     this.context = initBoard();
   },
+  watch: {
+    context(value) {
+      console.log(value);
+    }
+  },
   methods: {
     nextRound() {
       gameLoop(this.context);

@@ -74,7 +74,17 @@ export const handleAction = (
   playerId: string
 ) => {
   if (playerId === context.activePlayerId) {
-    console.log(`La carte ${card.id} à été jouée`);
+    const player = getPlayerById(context.players, playerId);
+    if (card.mana <= player.mana) {
+      player.mana -= card.mana;
+      const cardIndex = player.hand.findIndex(({ id }) => id === card.id);
+      player.hand.splice(cardIndex, 1);
+      const nextPlayer = getNextPlayer(context.players, context.activePlayerId);
+      nextPlayer.health -= card.mana;
+    } else {
+      console.warn("Tu n'as pas assez de mana");
+    }
+    console.log(`La carte ${card.id} a été jouée`);
   } else {
     console.log("ISSOU C'EST PAS A TOI");
   }

@@ -3,7 +3,7 @@ import { createHand } from "@/models/Hand";
 import { Card } from "./Card";
 
 const MAX_HEALTH = 30;
-const START_MANA = 0;
+const START_MANA = 10;
 
 export type Player = {
   id: string;
