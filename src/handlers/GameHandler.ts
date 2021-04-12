@@ -4,7 +4,9 @@ import {
   isDeckEmpty,
   isHandFull,
   getPlayerById,
-  getNextPlayer
+  getNextPlayer,
+  canPlayerPlayCard,
+  removePlayerMana
 } from "@/utils/player";
 import { Context, Steps } from "@/types/types";
 import { Card } from "@/models/Card";
@@ -75,8 +77,9 @@ export const handleAction = (
 ) => {
   if (playerId === context.activePlayerId) {
     const player = getPlayerById(context.players, playerId);
-    if (card.mana <= player.mana) {
-      player.mana -= card.mana;
+    if (canPlayerPlayCard(player, card)) {
+      player.mana = removePlayerMana(player.mana, card.mana);
+      // TODO : continue refacto
       const cardIndex = player.hand.findIndex(({ id }) => id === card.id);
       player.hand.splice(cardIndex, 1);
       const nextPlayer = getNextPlayer(context.players, context.activePlayerId);

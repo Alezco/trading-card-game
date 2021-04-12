@@ -1,4 +1,5 @@
 import { Player } from "@/models/Player";
+import { Card } from "@/models/Card";
 
 const MAX_HAND_SIZE = 5;
 
@@ -28,3 +29,9 @@ export const getNextPlayer = (players: Player[], id: string): Player => {
 
   return null;
 };
+
+export const canPlayerPlayCard = (player: Player, card: Card): boolean =>
+  player.mana >= card.mana;
+
+export const removePlayerMana = (playerMana: number, mana: number): number =>
+  playerMana - mana;
