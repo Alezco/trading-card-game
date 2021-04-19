@@ -1,5 +1,5 @@
 import { initBoard, drawCard, handleAction } from "@/handlers/GameHandler";
-import { getPlayerById } from "@/utils/player";
+// import { getPlayerById } from "@/utils/player";
 
 describe("GameHandler", () => {
   let player, player2, context;

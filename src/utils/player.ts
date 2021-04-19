@@ -35,3 +35,8 @@ export const canPlayerPlayCard = (player: Player, card: Card): boolean =>
 
 export const removePlayerMana = (playerMana: number, mana: number): number =>
   playerMana - mana;
+
+export const removePlayerHealth = (
+  playerHealth: number,
+  health: number
+): number => playerHealth - health;

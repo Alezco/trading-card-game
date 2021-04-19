@@ -1,6 +1,7 @@
 import { Card } from "./Card";
 import { Deck } from "./Deck";
 
+// TODO: think about Hand.hand ? hand = card[] change maybe
 export type Hand = {
   hand: Card[];
   newDeck: Deck;

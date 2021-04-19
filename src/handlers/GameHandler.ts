@@ -6,8 +6,11 @@ import {
   getPlayerById,
   getNextPlayer,
   canPlayerPlayCard,
-  removePlayerMana
+  removePlayerMana,
+  removePlayerHealth
 } from "@/utils/player";
+import { isActivePlayer } from "@/utils/context";
+import { removeHandCard } from "@/utils/hand";
 import { Context, Steps } from "@/types/types";
 import { Card } from "@/models/Card";
 
@@ -70,24 +73,26 @@ const handleMana = (player: Player): Player => {
   return newPlayer;
 };
 
+export const playCard = (player: Player, card: Card, context: Context) => {
+  player.mana = removePlayerMana(player.mana, card.mana);
+  player.hand = removeHandCard(player.hand, card.id);
+  const nextPlayer = getNextPlayer(context.players, context.activePlayerId);
+  nextPlayer.health = removePlayerHealth(nextPlayer.health, card.mana);
+};
+
 export const handleAction = (
   context: Context,
   card: Card,
   playerId: string
 ) => {
-  if (playerId === context.activePlayerId) {
+  if (isActivePlayer(playerId, context.activePlayerId)) {
     const player = getPlayerById(context.players, playerId);
     if (canPlayerPlayCard(player, card)) {
-      player.mana = removePlayerMana(player.mana, card.mana);
-      // TODO : continue refacto
-      const cardIndex = player.hand.findIndex(({ id }) => id === card.id);
-      player.hand.splice(cardIndex, 1);
-      const nextPlayer = getNextPlayer(context.players, context.activePlayerId);
-      nextPlayer.health -= card.mana;
+      playCard(player, card, context);
+      console.log(`La carte ${card.id} a été jouée`);
     } else {
       console.warn("Tu n'as pas assez de mana");
     }
-    console.log(`La carte ${card.id} a été jouée`);
   } else {
     console.log("ISSOU C'EST PAS A TOI");
   }

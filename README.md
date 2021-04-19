@@ -36,3 +36,4 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 - Ajouter des GitHub Actions
 - Ajouter un back-end
 - Ajouter un système de classement
+- Ajouter error log pour le toast (visuel)
