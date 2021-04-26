@@ -13,6 +13,7 @@ import { isActivePlayer } from "@/utils/context";
 import { removeHandCard } from "@/utils/hand";
 import { Context, Steps } from "@/types/types";
 import { Card } from "@/models/Card";
+import { createToast } from "mosha-vue-toastify";
 
 const MAX_MANA = 10;
 
@@ -89,12 +90,12 @@ export const handleAction = (
     const player = getPlayerById(context.players, playerId);
     if (canPlayerPlayCard(player, card)) {
       playCard(player, card, context);
-      console.log(`La carte ${card.id} a été jouée`);
+      createToast(`La carte ${card.id} a été jouée`);
     } else {
-      console.warn("Tu n'as pas assez de mana");
+      createToast("Tu n'as pas assez de mana", { type: "danger" });
     }
   } else {
-    console.log("ISSOU C'EST PAS A TOI");
+    createToast("ISSOU C'EST PAS A TOI", { type: "danger" });
   }
 };
 

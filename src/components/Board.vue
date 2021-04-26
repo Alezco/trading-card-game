@@ -20,6 +20,7 @@
 import Player from "./Player.vue";
 import { gameLoop, initBoard } from "@/handlers/GameHandler";
 import { Context } from "@/types/types";
+// import { defineComponent, onMounted, reactive, watch } from "vue";
 import { defineComponent } from "vue";
 
 export default defineComponent({
@@ -45,6 +46,51 @@ export default defineComponent({
     }
   }
 });
+//////////////////////////////////
+/// TEST with composition API ///
+////////////////////////////////
+// export default defineComponent({
+//   components: {
+//     Player
+//   },
+//   setup() {
+//     // With reactive()
+//     // let context = reactive<Context>(initBoard()); // Cause context is typed with properties that are not optionals
+
+//     // redundant
+//     // // onMounted(() => {
+//     // //   context = initBoard();
+//     // // });
+
+//     // const nextRound = () => {
+//     //   gameLoop(context);
+//     // };
+
+//     // watch(context, () => {
+//     //   console.log(context);
+//     // });
+
+//     // return {
+//     //   context,
+//     //   nextRound
+//     // };
+
+//     // With ref()
+//     // const context = ref<Context>(initBoard());
+//     // const nextRound = () => {
+//     //   gameLoop(context.value);
+//     // };
+
+//     // watch(context, () => {
+//     //   console.log(context.value);
+//     // });
+
+//     // return {
+//     //   context,
+//     //   nextRound
+//     // };
+//   }
+// });
 </script>
 
 <style scoped>

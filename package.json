@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "core-js": "^3.6.5",
+    "mosha-vue-toastify": "^1.0.10",
     "vue": "^3.0.0"
   },
   "devDependencies": {

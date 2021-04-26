@@ -10,7 +10,7 @@ describe("Player utils", () => {
   describe("isDeckEmpty", () => {
     it("should return true when deck is empty", () => {
       const player = {
-        id: 1,
+        id: "1",
         health: 30,
         mana: 0,
         hand: [],
@@ -21,7 +21,7 @@ describe("Player utils", () => {
 
     it("should return false when deck is not empty", () => {
       const player = {
-        id: 1,
+        id: "1",
         health: 30,
         mana: 0,
         hand: [],
@@ -34,7 +34,7 @@ describe("Player utils", () => {
   describe("isHandFull", () => {
     it("should return true when hand is full", () => {
       const player = {
-        id: 1,
+        id: "1",
         health: 30,
         mana: 0,
         hand: [
@@ -51,7 +51,7 @@ describe("Player utils", () => {
 
     it("should return false when hand is not full", () => {
       const player = {
-        id: 1,
+        id: "1",
         health: 30,
         mana: 0,
         hand: [
@@ -67,7 +67,7 @@ describe("Player utils", () => {
   describe("isDrawable", () => {
     it("should return true when hand is not full and deck is not empty", () => {
       const player = {
-        id: 1,
+        id: "1",
         health: 30,
         mana: 0,
         hand: [
@@ -82,7 +82,7 @@ describe("Player utils", () => {
 
     it("should return false when hand is full and deck is empty", () => {
       const player = {
-        id: 1,
+        id: "1",
         health: 30,
         mana: 0,
         hand: [
