@@ -27,10 +27,8 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 
 ### TODO
-- Passer Board.vue en Vue 3
 - Ajouter la notion de tour (étapes, actions, etc...)
     - Continuer initRound
-- Afficher la main du joueur
 - Compléter la gestion de la pioche
 - Mettre le projet sur GitHub Pages
 - Ajouter des GitHub Actions

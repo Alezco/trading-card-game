@@ -5,7 +5,7 @@ export type StepLabel = "initRound" | "playerActions" | "endRound";
 export type Context = {
   round: number;
   players: Player[];
-  activePlayerId: string;
+  activePlayerId: string | null;
 };
 
 export type Step = {

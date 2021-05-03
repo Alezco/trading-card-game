@@ -100,15 +100,18 @@ export const handleAction = (
 };
 
 export const initRound = (context: Context): Context => {
-  const previousPlayer = getPlayerById(context.players, context.activePlayerId);
-  let nextPlayer = getNextPlayer(context.players, context.activePlayerId); // TODO : Utiliser previousPlayer pour récupérer le nextPlayer ?
+  // TODO : Check reactivity on player after handleHand and HandleMana funcs
+  let activePlayer = getPlayerById(context.players, context.activePlayerId);
+  activePlayer = handleHand(activePlayer);
+  // console.log('afterHandleHand', activePlayer);
+  activePlayer = handleMana(activePlayer);
+  // console.log('afterHandleMana', activePlayer);
 
-  nextPlayer = handleHand(nextPlayer);
-  nextPlayer = handleMana(nextPlayer);
+  const nextPlayer = getNextPlayer(context.players, context.activePlayerId);
 
   return {
     ...context,
-    players: [previousPlayer, nextPlayer]
+    players: [activePlayer, nextPlayer]
   };
 };
 
@@ -117,7 +120,14 @@ export const playerActions = (context: Context): Context => {
 };
 
 export const endRound = (context: Context): Context => {
-  return context;
+  const previousPlayer = getPlayerById(context.players, context.activePlayerId);
+  const nextPlayer = getNextPlayer(context.players, context.activePlayerId);
+
+  return {
+    round: context.round + 1,
+    players: [previousPlayer, nextPlayer],
+    activePlayerId: nextPlayer.id
+  };
 };
 
 const steps: Steps = {
