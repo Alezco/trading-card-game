@@ -10,7 +10,7 @@ describe("Player utils", () => {
   describe("isDeckEmpty", () => {
     it("should return true when deck is empty", () => {
       const player = {
-        id: "1",
+        id: "player",
         health: 30,
         mana: 0,
         hand: [],
@@ -21,7 +21,7 @@ describe("Player utils", () => {
 
     it("should return false when deck is not empty", () => {
       const player = {
-        id: "1",
+        id: "player1",
         health: 30,
         mana: 0,
         hand: [],
@@ -34,7 +34,7 @@ describe("Player utils", () => {
   describe("isHandFull", () => {
     it("should return true when hand is full", () => {
       const player = {
-        id: "1",
+        id: "player1",
         health: 30,
         mana: 0,
         hand: [
@@ -51,7 +51,7 @@ describe("Player utils", () => {
 
     it("should return false when hand is not full", () => {
       const player = {
-        id: "1",
+        id: "player1",
         health: 30,
         mana: 0,
         hand: [
@@ -67,7 +67,7 @@ describe("Player utils", () => {
   describe("isDrawable", () => {
     it("should return true when hand is not full and deck is not empty", () => {
       const player = {
-        id: "1",
+        id: "player1",
         health: 30,
         mana: 0,
         hand: [
@@ -82,7 +82,7 @@ describe("Player utils", () => {
 
     it("should return false when hand is full and deck is empty", () => {
       const player = {
-        id: "1",
+        id: "player1",
         health: 30,
         mana: 0,
         hand: [
@@ -101,7 +101,7 @@ describe("Player utils", () => {
   describe("getPlayerById", () => {
     it("should return player when correct id is given", () => {
       const player1 = {
-        id: "Pablo",
+        id: "player1",
         health: 30,
         mana: 0,
         hand: [
@@ -112,7 +112,7 @@ describe("Player utils", () => {
         deck: [{ id: "Benjamin", mana: 0 }]
       };
       const player2 = {
-        id: "Yannick",
+        id: "player2",
         health: 30,
         mana: 0,
         hand: [
@@ -122,14 +122,14 @@ describe("Player utils", () => {
         ],
         deck: [{ id: "Hassan", mana: 1 }]
       };
-      const players = [player1, player2];
+      const players = { player1, player2 };
 
-      expect(getPlayerById(players, "Pablo")).toBe(player1);
+      expect(getPlayerById(players, "player1")).toBe(player1);
     });
 
     it("should return null when incorrect id is given", () => {
       const player1 = {
-        id: "Pablo",
+        id: "player1",
         health: 30,
         mana: 0,
         hand: [
@@ -140,7 +140,7 @@ describe("Player utils", () => {
         deck: [{ id: "Benjamin", mana: 0 }]
       };
       const player2 = {
-        id: "Yannick",
+        id: "player2",
         health: 30,
         mana: 0,
         hand: [
@@ -150,16 +150,16 @@ describe("Player utils", () => {
         ],
         deck: [{ id: "Hassan", mana: 1 }]
       };
-      const players = [player1, player2];
+      const players = { player1, player2 };
 
       expect(getPlayerById(players, "pasUnID")).toBe(null);
     });
   });
 
-  describe("getNexPlayer", () => {
+  describe("getNextPlayer", () => {
     it("Should return the other player", () => {
       const player1 = {
-        id: "Pablo",
+        id: "player1",
         health: 30,
         mana: 0,
         hand: [
@@ -170,7 +170,7 @@ describe("Player utils", () => {
         deck: [{ id: "Benjamin", mana: 0 }]
       };
       const player2 = {
-        id: "Yannick",
+        id: "player2",
         health: 30,
         mana: 0,
         hand: [
@@ -180,14 +180,14 @@ describe("Player utils", () => {
         ],
         deck: [{ id: "Hassan", mana: 1 }]
       };
-      const players = [player1, player2];
+      const players = { player1, player2 };
 
-      expect(getNextPlayer(players, "Pablo")).toBe(player2);
+      expect(getNextPlayer(players, "player1")).toBe(player2);
     });
 
     it("should return null when incorrect id is given", () => {
       const player1 = {
-        id: "Pablo",
+        id: "player1",
         health: 30,
         mana: 0,
         hand: [
@@ -198,7 +198,7 @@ describe("Player utils", () => {
         deck: [{ id: "Benjamin", mana: 0 }]
       };
       const player2 = {
-        id: "Yannick",
+        id: "player2",
         health: 30,
         mana: 0,
         hand: [
@@ -208,7 +208,7 @@ describe("Player utils", () => {
         ],
         deck: [{ id: "Hassan", mana: 1 }]
       };
-      const players = [player1, player2];
+      const players = { player1, player2 };
 
       expect(getNextPlayer(players, "notAnId")).toBe(null);
     });

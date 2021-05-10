@@ -23,7 +23,7 @@ export const initBoard = (): Context => {
 
   return {
     round: 1,
-    players: [player1, player2],
+    players: { player1, player2 },
     activePlayerId: player1.id
   };
 };
@@ -103,6 +103,7 @@ export const initRound = (context: Context): Context => {
   // TODO : Check reactivity on player after handleHand and HandleMana funcs
   let activePlayer = getPlayerById(context.players, context.activePlayerId);
   activePlayer = handleHand(activePlayer);
+  // activePlayer = Object.assign(handleHand(activePlayer), activePlayer);
   // console.log('afterHandleHand', activePlayer);
   activePlayer = handleMana(activePlayer);
   // console.log('afterHandleMana', activePlayer);
@@ -111,7 +112,10 @@ export const initRound = (context: Context): Context => {
 
   return {
     ...context,
-    players: [activePlayer, nextPlayer]
+    players: {
+      [activePlayer.id]: activePlayer,
+      [nextPlayer.id]: nextPlayer
+    }
   };
 };
 
@@ -125,7 +129,10 @@ export const endRound = (context: Context): Context => {
 
   return {
     round: context.round + 1,
-    players: [previousPlayer, nextPlayer],
+    players: {
+      [previousPlayer.id]: previousPlayer,
+      [nextPlayer.id]: nextPlayer
+    },
     activePlayerId: nextPlayer.id
   };
 };

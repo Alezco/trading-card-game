@@ -3,32 +3,38 @@
 Mob programming trading card game following these instructions : https://codingdojo.org/kata/TradingCardGame/
 
 ## Project setup
+
 ```
 yarn install
 ```
 
 ### Compiles and hot-reloads for development
+
 ```
 yarn serve
 ```
 
 ### Compiles and minifies for production
+
 ```
 yarn build
 ```
 
 ### Lints and fixes files
+
 ```
 yarn lint
 ```
 
 ### Customize configuration
+
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
-
 ### TODO
+
+- Corriger les tests cassés
 - Ajouter la notion de tour (étapes, actions, etc...)
-    - Continuer initRound
+  - Continuer initRound
 - Compléter la gestion de la pioche
 - Mettre le projet sur GitHub Pages
 - Ajouter des GitHub Actions

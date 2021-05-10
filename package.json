@@ -8,6 +8,7 @@
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
     "test": "jest",
+    "test-watch": "jest --watch",
     "lint-fix": "vue-cli-service lint --fix"
   },
   "dependencies": {

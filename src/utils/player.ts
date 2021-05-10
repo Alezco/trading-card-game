@@ -1,3 +1,4 @@
+import { Players } from "@/types/types";
 import { Player } from "@/models/Player";
 import { Card } from "@/models/Card";
 
@@ -10,24 +11,15 @@ export const isHandFull = (player: Player): boolean =>
 export const isDrawable = (player: Player): boolean =>
   !isDeckEmpty(player) && !isHandFull(player);
 
-export const getPlayerById = (players: Player[], id: string): Player => {
-  return players.find(player => player.id === id) || null;
+export const getPlayerById = (players: Players, id: string): Player => {
+  return players[id] || null;
 };
 
-export const getNextPlayer = (players: Player[], id: string): Player => {
-  let newActivePlayer;
-
-  if (getPlayerById(players, id)) {
-    players.map(player => {
-      if (player.id !== id) {
-        newActivePlayer = player;
-      }
-    });
-
-    return newActivePlayer;
+export const getNextPlayer = (players: Players, id: string): Player => {
+  if (Object.keys(players).some(playerId => playerId !== id)) {
+    return null;
   }
-
-  return null;
+  return Object.values(players).find(({ id: playerId }) => playerId !== id);
 };
 
 export const canPlayerPlayCard = (player: Player, card: Card): boolean =>

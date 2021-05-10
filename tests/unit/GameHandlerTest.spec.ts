@@ -2,10 +2,10 @@ import { initBoard, drawCard, handleAction } from "@/handlers/GameHandler";
 // import { getPlayerById } from "@/utils/player";
 
 describe("GameHandler", () => {
-  let player, player2, context;
+  let player1, player2, context;
   beforeEach(() => {
-    player = {
-      id: "Hassan",
+    player1 = {
+      id: "player1",
       health: 30,
       mana: 5,
       hand: [
@@ -16,7 +16,7 @@ describe("GameHandler", () => {
     };
 
     player2 = {
-      id: "Hassan2",
+      id: "player2",
       health: 30,
       mana: 7,
       hand: [],
@@ -25,18 +25,18 @@ describe("GameHandler", () => {
 
     context = {
       round: 1,
-      players: [player, player2],
-      activePlayerId: player.id
+      players: { player1, player2 },
+      activePlayerId: player1.id
     };
   });
   describe("initBoard", () => {
-    it("should return a correct correct context", () => {
+    it("should return a correct context", () => {
       const context = initBoard();
 
       expect(context.round).toBe(1);
-      expect(context.players.length).toBe(2);
-      expect(typeof context.players[0]).toBe("object");
-      expect(typeof context.players[1]).toBe("object");
+      expect(Object.keys(context.players).length).toBe(2);
+      expect(typeof context.players.player1).toBe("object");
+      expect(typeof context.players.player2).toBe("object");
     });
   });
 
@@ -48,20 +48,20 @@ describe("GameHandler", () => {
     });
 
     it("should remove card from hand", () => {
-      const firstPlayerHandCardId = player.hand[0].id;
-      handleAction(context, player.hand[0], player.id);
-      expect(player.hand.find(({ id }) => id === firstPlayerHandCardId)).toBe(
+      const firstPlayerHandCardId = player1.hand[0].id;
+      handleAction(context, player1.hand[0], player1.id);
+      expect(player1.hand.find(({ id }) => id === firstPlayerHandCardId)).toBe(
         undefined
       );
     });
 
     it("should remove player mana", () => {
-      handleAction(context, player.hand[0], player.id);
-      expect(player.mana).toBe(3);
+      handleAction(context, player1.hand[0], player1.id);
+      expect(player1.mana).toBe(3);
     });
 
     it("should attack enemy", () => {
-      handleAction(context, player.hand[0], player.id);
+      handleAction(context, player1.hand[0], player1.id);
       expect(player2.health).toBe(28);
     });
   });
@@ -69,7 +69,7 @@ describe("GameHandler", () => {
   describe("drawCard", () => {
     it("should draw a card from the deck to the hand", () => {
       const localPlayer = {
-        ...player,
+        ...player1,
         hand: [],
         deck: [{ id: "foo", mana: 2 }]
       };
@@ -80,7 +80,7 @@ describe("GameHandler", () => {
     });
     it("should remove one health point when deck is empty", () => {
       const localPlayer = {
-        ...player,
+        ...player1,
         hand: [],
         deck: []
       };
@@ -94,7 +94,7 @@ describe("GameHandler", () => {
     });
     it("should keep 5 cards when hand is full", () => {
       const localPlayer = {
-        ...player,
+        ...player1,
         hand: [
           { id: "1", mana: 2 },
           { id: "2", mana: 5 },

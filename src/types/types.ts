@@ -2,9 +2,11 @@ import { Player } from "@/models/Player";
 
 export type StepLabel = "initRound" | "playerActions" | "endRound";
 
+export type Players = { [id: string]: Player };
+
 export type Context = {
   round: number;
-  players: Player[];
+  players: Players;
   activePlayerId: string | null;
 };
 
