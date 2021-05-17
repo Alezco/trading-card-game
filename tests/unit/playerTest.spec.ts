@@ -11,6 +11,7 @@ describe("Player utils", () => {
     it("should return true when deck is empty", () => {
       const player = {
         id: "player",
+        name: "Pablo",
         health: 30,
         mana: 0,
         hand: [],
@@ -22,6 +23,7 @@ describe("Player utils", () => {
     it("should return false when deck is not empty", () => {
       const player = {
         id: "player1",
+        name: "Pablo",
         health: 30,
         mana: 0,
         hand: [],
@@ -35,6 +37,7 @@ describe("Player utils", () => {
     it("should return true when hand is full", () => {
       const player = {
         id: "player1",
+        name: "Pablo",
         health: 30,
         mana: 0,
         hand: [
@@ -52,6 +55,7 @@ describe("Player utils", () => {
     it("should return false when hand is not full", () => {
       const player = {
         id: "player1",
+        name: "Pablo",
         health: 30,
         mana: 0,
         hand: [
@@ -68,6 +72,7 @@ describe("Player utils", () => {
     it("should return true when hand is not full and deck is not empty", () => {
       const player = {
         id: "player1",
+        name: "Pablo",
         health: 30,
         mana: 0,
         hand: [
@@ -83,6 +88,7 @@ describe("Player utils", () => {
     it("should return false when hand is full and deck is empty", () => {
       const player = {
         id: "player1",
+        name: "Pablo",
         health: 30,
         mana: 0,
         hand: [
@@ -102,6 +108,7 @@ describe("Player utils", () => {
     it("should return player when correct id is given", () => {
       const player1 = {
         id: "player1",
+        name: "Pablo",
         health: 30,
         mana: 0,
         hand: [
@@ -113,6 +120,7 @@ describe("Player utils", () => {
       };
       const player2 = {
         id: "player2",
+        name: "Yannick",
         health: 30,
         mana: 0,
         hand: [
@@ -130,6 +138,7 @@ describe("Player utils", () => {
     it("should return null when incorrect id is given", () => {
       const player1 = {
         id: "player1",
+        name: "Pablo",
         health: 30,
         mana: 0,
         hand: [
@@ -141,6 +150,7 @@ describe("Player utils", () => {
       };
       const player2 = {
         id: "player2",
+        name: "Yannick",
         health: 30,
         mana: 0,
         hand: [
@@ -160,6 +170,7 @@ describe("Player utils", () => {
     it("Should return the other player", () => {
       const player1 = {
         id: "player1",
+        name: "Pablo",
         health: 30,
         mana: 0,
         hand: [
@@ -171,6 +182,7 @@ describe("Player utils", () => {
       };
       const player2 = {
         id: "player2",
+        name: "Yannick",
         health: 30,
         mana: 0,
         hand: [
@@ -188,6 +200,7 @@ describe("Player utils", () => {
     it("should return null when incorrect id is given", () => {
       const player1 = {
         id: "player1",
+        name: "Pablo",
         health: 30,
         mana: 0,
         hand: [
@@ -199,6 +212,7 @@ describe("Player utils", () => {
       };
       const player2 = {
         id: "player2",
+        name: "Yannick",
         health: 30,
         mana: 0,
         hand: [

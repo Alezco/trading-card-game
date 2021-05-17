@@ -1,12 +1,13 @@
 <template>
   <div class="player-item">
-    <h2>Player {{ playerId }}</h2>
+    <h2>{{ player.name }}</h2>
     <div class="player-item-description">
-      <span>Healthpoints: </span> {{ health }} <span>Mana: </span> {{ mana }}
+      <span>Healthpoints: </span> {{ player.health }} <span>Mana: </span>
+      {{ player.mana }}
       <span>Deck: </span>
-      {{ deck.length }} cards
+      {{ player.deck.length }} cards
     </div>
-    <Hand :hand="hand" :playerId="playerId" :context="context" />
+    <Hand :hand="player.hand" :playerId="player.id" :context="context" />
   </div>
 </template>
 
@@ -14,17 +15,14 @@
 import Hand from "./Hand.vue";
 import { defineComponent, PropType } from "vue";
 import { Context } from "@/types/types";
+import type {Player} from "@/models/Player"
 
 export default defineComponent({
   components: {
     Hand
   },
   props: {
-    playerId: String,
-    health: Number,
-    mana: Number,
-    hand: Array,
-    deck: Array,
+    player: Object as PropType<Player>,
     context: Object as PropType<Context>
   }
 });

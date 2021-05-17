@@ -1,13 +1,13 @@
 import { createPlayer, Player } from "@/models/Player";
 import {
-  isDrawable,
-  isDeckEmpty,
-  isHandFull,
-  getPlayerById,
-  getNextPlayer,
   canPlayerPlayCard,
-  removePlayerMana,
-  removePlayerHealth
+  getNextPlayer,
+  getPlayerById,
+  isDeckEmpty,
+  isDrawable,
+  isHandFull,
+  removePlayerHealth,
+  removePlayerMana
 } from "@/utils/player";
 import { isActivePlayer } from "@/utils/context";
 import { removeHandCard } from "@/utils/hand";
@@ -23,7 +23,7 @@ export const initBoard = (): Context => {
 
   return {
     round: 1,
-    players: { player1, player2 },
+    players: { [player1.id]: player1, [player2.id]: player2 },
     activePlayerId: player1.id
   };
 };
@@ -66,12 +66,10 @@ const handleHand = (player: Player): Player => {
 };
 
 const handleMana = (player: Player): Player => {
-  const newPlayer = {
+  return {
     ...player,
     mana: player.mana < MAX_MANA ? player.mana + 1 : MAX_MANA
   };
-
-  return newPlayer;
 };
 
 export const playCard = (player: Player, card: Card, context: Context) => {

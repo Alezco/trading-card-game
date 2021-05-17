@@ -16,7 +16,7 @@ export const getPlayerById = (players: Players, id: string): Player => {
 };
 
 export const getNextPlayer = (players: Players, id: string): Player => {
-  if (Object.keys(players).some(playerId => playerId !== id)) {
+  if (!Object.keys(players).find(playerId => playerId === id)) {
     return null;
   }
   return Object.values(players).find(({ id: playerId }) => playerId !== id);

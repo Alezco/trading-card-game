@@ -5,12 +5,8 @@
   <div class="player-container">
     <Player
       v-for="player in context.players"
-      :health="player.health"
-      :hand="player.hand"
-      :mana="player.mana"
       :key="player.id"
-      :playerId="player.id"
-      :deck="player.deck"
+      :player="player"
       :context="context"
     />
   </div>

@@ -6,6 +6,7 @@ describe("GameHandler", () => {
   beforeEach(() => {
     player1 = {
       id: "player1",
+      name: "Pablo",
       health: 30,
       mana: 5,
       hand: [
@@ -17,6 +18,7 @@ describe("GameHandler", () => {
 
     player2 = {
       id: "player2",
+      name: "Yannick",
       health: 30,
       mana: 7,
       hand: [],
@@ -35,8 +37,7 @@ describe("GameHandler", () => {
 
       expect(context.round).toBe(1);
       expect(Object.keys(context.players).length).toBe(2);
-      expect(typeof context.players.player1).toBe("object");
-      expect(typeof context.players.player2).toBe("object");
+      expect(typeof context.players).toBe("object");
     });
   });
 
