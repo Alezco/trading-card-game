@@ -32,9 +32,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ### TODO
 
-- Corriger les tests cassés
-- Ajouter la notion de tour (étapes, actions, etc...)
-  - Continuer initRound
+- Pistes de réflexion : Fonctionnel pose soucis par rapport au reactif + ajouter le step dans le context et executer le bon step dans le gameloop (revoir le gameloop) + mettre un store ?
 - Compléter la gestion de la pioche
 - Mettre le projet sur GitHub Pages
 - Ajouter des GitHub Actions
