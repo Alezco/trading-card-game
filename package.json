@@ -15,7 +15,8 @@
     "core-js": "^3.6.5",
     "mosha-vue-toastify": "^1.0.10",
     "uuid": "^8.3.2",
-    "vue": "^3.0.0"
+    "vue": "^3.0.0",
+    "vuex": "^4.0.2"
   },
   "devDependencies": {
     "@types/jest": "^24.0.19",
