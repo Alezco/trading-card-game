@@ -4,7 +4,7 @@
   <button @click="nextRound()">Fin du tour</button>
   <div class="player-container">
     <Player
-      v-for="player in context.players"
+      v-for="player in players"
       :key="player.id"
       :player="player"
       :context="context"
@@ -24,27 +24,27 @@ export default defineComponent({
     Player
   },
   setup() {
-    let context = reactive<Context>(initBoard());
+    // let context = reactive<Context>(initBoard());
     const store = useStore();
 
     const nextRound = () => {
-      gameLoop(context);
+      gameLoop();
     };
 
     const round = computed(() => store.getters.getRound);
-
-    console.log(round);
+    const players = computed(() => store.getters.getPlayers);
     onMounted(() => {
-      context = gameLoop(context);
+      gameLoop();
     });
 
-    watch(context, () => {
-      console.log(context);
-    });
+    // watch(context, () => {
+    //   console.log(context);
+    // });
 
     return {
-      context,
+      // context,
       round,
+      players,
       nextRound
     };
   }

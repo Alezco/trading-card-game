@@ -14,6 +14,7 @@ import { removeHandCard } from "@/utils/hand";
 import { Context, Steps } from "@/types/types";
 import { Card } from "@/models/Card";
 import { createToast } from "mosha-vue-toastify";
+import { useStore } from "vuex";
 
 const MAX_MANA = 10;
 
@@ -150,16 +151,22 @@ const steps: Steps = {
   }
 };
 
-export const gameLoop = (context: Context): Context => {
-  let finalContext = context;
+export const gameLoop = () => {
+  const store = useStore();
 
-  Object.values(steps).forEach(({ label: stepLabel, method: stepMethod }) => {
-    console.log(`--------------------${stepLabel}---------------------`);
-    console.log("before step", finalContext);
-    finalContext = stepMethod(finalContext);
-    console.log("after step", finalContext);
-    console.log(`--------------------/${stepLabel}---------------------`);
-  });
+  const round = store.getters.getRound;
+  const players = store.getters.getPlayers;
+  console.log(round);
+  console.log(players);
+  // let finalContext = context;
 
-  return finalContext;
+  // Object.values(steps).forEach(({ label: stepLabel, method: stepMethod }) => {
+  //   console.log(`--------------------${stepLabel}---------------------`);
+  //   console.log("before step", finalContext);
+  //   finalContext = stepMethod(finalContext);
+  //   console.log("after step", finalContext);
+  //   console.log(`--------------------/${stepLabel}---------------------`);
+  // });
+
+  // return finalContext;
 };
