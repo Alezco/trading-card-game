@@ -15,7 +15,6 @@
 <script lang="ts">
 import Player from "./Player.vue";
 import { gameLoop, initBoard } from "@/handlers/GameHandler";
-import { Context } from "@/types/types";
 import { defineComponent, onMounted, reactive, watch, computed } from "vue";
 import { useStore } from "vuex";
 

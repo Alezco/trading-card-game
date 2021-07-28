@@ -63,6 +63,7 @@ export const drawCard = (player: Player): Player => {
 };
 
 const handleHand = (player: Player): Player => {
+  console.log(player);
   return drawCard(player);
 };
 
@@ -101,7 +102,7 @@ export const handleAction = (
 export const initRound = (context: Context): Context => {
   // TODO : Check reactivity on player after handleHand and HandleMana funcs
   let activePlayer = getPlayerById(context.players, context.activePlayerId);
-  activePlayer = handleHand(activePlayer);
+
   // activePlayer = Object.assign(handleHand(activePlayer), activePlayer);
   // console.log('afterHandleHand', activePlayer);
   activePlayer = handleMana(activePlayer);
@@ -116,6 +117,15 @@ export const initRound = (context: Context): Context => {
       [nextPlayer.id]: nextPlayer
     }
   };
+};
+
+export const startPlayerRound = (player: Player): Player => {
+  let handledPlayer;
+  console.log("startPlayerRound", player);
+  handledPlayer = handleHand(player);
+  handledPlayer = handleMana(player);
+
+  return handledPlayer;
 };
 
 export const playerActions = (context: Context): Context => {
@@ -154,10 +164,8 @@ const steps: Steps = {
 export const gameLoop = () => {
   const store = useStore();
 
-  const round = store.getters.getRound;
-  const players = store.getters.getPlayers;
-  console.log(round);
-  console.log(players);
+  store.dispatch("initRound");
+
   // let finalContext = context;
 
   // Object.values(steps).forEach(({ label: stepLabel, method: stepMethod }) => {
