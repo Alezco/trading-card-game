@@ -25,7 +25,8 @@ export const initBoard = (): Context => {
   return {
     round: 1,
     players: { [player1.id]: player1, [player2.id]: player2 },
-    activePlayerId: player1.id
+    activePlayerId: player1.id,
+    error: null
   };
 };
 
@@ -74,11 +75,25 @@ const handleMana = (player: Player): Player => {
   };
 };
 
-export const playCard = (player: Player, card: Card, context: Context) => {
-  player.mana = removePlayerMana(player.mana, card.mana);
-  player.hand = removeHandCard(player.hand, card.id);
-  const nextPlayer = getNextPlayer(context.players, context.activePlayerId);
-  nextPlayer.health = removePlayerHealth(nextPlayer.health, card.mana);
+// export const playCard = (player: Player, card: Card, context: Context) => {
+//   player.mana = removePlayerMana(player.mana, card.mana);
+//   player.hand = removeHandCard(player.hand, card.id);
+//   const nextPlayer = getNextPlayer(context.players, context.activePlayerId);
+//   nextPlayer.health = removePlayerHealth(nextPlayer.health, card.mana);
+// };
+export const playCard = (player: Player, card: Card) => {
+  const newPlayer = { ...player };
+  if (!canPlayerPlayCard(player, card)) {
+    return {
+      error: {
+        message: "Vous n'avez pas assez de mana"
+      }
+    };
+  }
+
+  newPlayer.mana = removePlayerMana(newPlayer.mana, card.mana);
+  newPlayer.hand = removeHandCard(newPlayer.hand, card.id);
+  return { newPlayer };
 };
 
 export const handleAction = (
@@ -86,18 +101,25 @@ export const handleAction = (
   card: Card,
   playerId: string
 ) => {
-  if (isActivePlayer(playerId, context.activePlayerId)) {
-    const player = getPlayerById(context.players, playerId);
-    if (canPlayerPlayCard(player, card)) {
-      playCard(player, card, context);
-      createToast(`La carte ${card.id} a été jouée`);
-    } else {
-      createToast("Tu n'as pas assez de mana", { type: "danger" });
-    }
-  } else {
-    createToast("ISSOU C'EST PAS A TOI", { type: "danger" });
-  }
+  return true;
 };
+// export const handleAction = (
+//   context: Context,
+//   card: Card,
+//   playerId: string
+// ) => {
+//   if (isActivePlayer(playerId, context.activePlayerId)) {
+//     const player = getPlayerById(context.players, playerId);
+//     if (canPlayerPlayCard(player, card)) {
+//       playCard(player, card, context);
+//       createToast(`La carte ${card.id} a été jouée`);
+//     } else {
+//       createToast("Tu n'as pas assez de mana", { type: "danger" });
+//     }
+//   } else {
+//     createToast("ISSOU C'EST PAS A TOI", { type: "danger" });
+//   }
+// };
 
 export const initRound = (context: Context): Context => {
   // TODO : Check reactivity on player after handleHand and HandleMana funcs
@@ -121,10 +143,8 @@ export const initRound = (context: Context): Context => {
 
 export const startPlayerRound = (player: Player): Player => {
   let handledPlayer;
-  console.log("startPlayerRound", player);
   handledPlayer = handleHand(player);
-  handledPlayer = handleMana(player);
-
+  handledPlayer = handleMana(handledPlayer);
   return handledPlayer;
 };
 
@@ -142,7 +162,8 @@ export const endRound = (context: Context): Context => {
       [previousPlayer.id]: previousPlayer,
       [nextPlayer.id]: nextPlayer
     },
-    activePlayerId: nextPlayer.id
+    activePlayerId: nextPlayer.id,
+    error: null
   };
 };
 

@@ -10,12 +10,13 @@
       :context="context"
     />
   </div>
+  Error {{ error }}
 </template>
 
 <script lang="ts">
 import Player from "./Player.vue";
-import { gameLoop, initBoard } from "@/handlers/GameHandler";
-import { defineComponent, onMounted, reactive, watch, computed } from "vue";
+import { gameLoop } from "@/handlers/GameHandler";
+import { defineComponent, onMounted, computed } from "vue";
 import { useStore } from "vuex";
 
 export default defineComponent({
@@ -32,6 +33,8 @@ export default defineComponent({
 
     const round = computed(() => store.getters.getRound);
     const players = computed(() => store.getters.getPlayers);
+    const error = computed(() => store.getters.getError);
+
     onMounted(() => {
       gameLoop();
     });
@@ -44,7 +47,8 @@ export default defineComponent({
       // context,
       round,
       players,
-      nextRound
+      nextRound,
+      error
     };
   }
 });
