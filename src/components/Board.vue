@@ -27,10 +27,6 @@ export default defineComponent({
     // let context = reactive<Context>(initBoard());
     const store = useStore();
 
-    const nextRound = () => {
-      gameLoop();
-    };
-
     const round = computed(() => store.getters.getRound);
     const players = computed(() => store.getters.getPlayers);
     const error = computed(() => store.getters.getError);
@@ -47,7 +43,7 @@ export default defineComponent({
       // context,
       round,
       players,
-      nextRound,
+      nextRound: () => store.dispatch("endRound"),
       error
     };
   }

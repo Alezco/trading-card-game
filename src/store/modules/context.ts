@@ -6,6 +6,7 @@ import {
   startPlayerRound,
   playCard
 } from "@/handlers/GameHandler";
+import { getNextPlayer } from "@/utils/player";
 
 const player1 = createPlayer("Marianne");
 const player2 = createPlayer("Hassan");
@@ -50,9 +51,9 @@ const setters = {
  * 1.1 - Piocher -- DONE
  * 1.2 - gérer le mana -- DONE
  * 2 - le tour du joueur
- * 2.1 - joue une carte
- * 2.1.1 - Vérifier que la bonne carte est jouée --> Card.ts
- * 3 - passer son tour
+ * 2.1 - joue une carte - DONE
+ * 2.1.1 - Vérifier que la bonne carte est jouée --> Card.ts (Add playerId in card values)
+ * 3 - passer son tour -- DONE
  */
 
 const actions = {
@@ -64,6 +65,15 @@ const actions = {
 
     commit("updateError", error);
     if (!error) commit("updatePlayer", newPlayer);
+  },
+  endRound: ({ commit, getters, dispatch }) => {
+    const { id } = getNextPlayer(
+      getters.getPlayers,
+      getters.getActivePlayer.id
+    );
+    commit("updateRound");
+    commit("updateActivePlayerId", id);
+    dispatch("initRound");
   }
 };
 
@@ -76,6 +86,12 @@ const mutations = {
   },
   updateError: (state, payload) => {
     state.error = payload || null;
+  },
+  updateRound: state => {
+    state.round += 1;
+  },
+  updateActivePlayerId: (state, payload) => {
+    state.activePlayerId = payload;
   }
 };
 
