@@ -1,16 +1,23 @@
 <template>
-  <div v-for="card in hand" :key="card.id" @click="playCard(card)">
+  <div v-for="card in hand" :key="card.id" @click="handleAction(card)">
     {{ card.id }}: {{ card.mana }}
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from "vue";
-import { handleAction } from "@/handlers/GameHandler";
+import { defineComponent, PropType, computed } from "vue";
+import { useStore } from "vuex";
 import { Context } from "@/types/types";
 import { mapActions } from "vuex";
 
 export default defineComponent({
+  setup() {
+    const store = useStore();
+    const activePlayerId = computed(() => store.getters.getActivePlayerId);
+    return {
+      activePlayerId
+    };
+  },
   props: {
     hand: Array,
     playerId: String,
@@ -21,7 +28,11 @@ export default defineComponent({
       playCard: "playCard"
     }),
     handleAction(card) {
-      handleAction(this.context, card, this.playerId);
+      console.log(card.playerId, this.activePlayerId, this);
+
+      if (card.playerId === this.activePlayerId) {
+        this.playCard(card);
+      }
     }
   }
 });

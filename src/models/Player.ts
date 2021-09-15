@@ -16,11 +16,12 @@ export type Player = {
 };
 
 export const createPlayer = (name: string): Player => {
-  const deck = createDeck();
+  const id = uuidv4();
+  const deck = createDeck(id);
   const { hand, newDeck } = createHand(deck);
 
   return {
-    id: uuidv4(),
+    id,
     name,
     health: MAX_HEALTH,
     mana: START_MANA,

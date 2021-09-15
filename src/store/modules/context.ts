@@ -26,6 +26,9 @@ const getters = {
   getRound: state => {
     return state.round;
   },
+  getActivePlayerId: state => {
+    return state.activePlayerId;
+  },
   getActivePlayer: state => {
     return state.players[state.activePlayerId];
   },
@@ -61,6 +64,8 @@ const actions = {
     commit("updatePlayer", startPlayerRound(getters.getActivePlayer));
   },
   playCard: ({ commit, getters }, card) => {
+    console.log(`playing card`, card);
+
     const { error, newPlayer } = playCard(getters.getActivePlayer, card);
 
     commit("updateError", error);

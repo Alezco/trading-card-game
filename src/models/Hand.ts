@@ -8,10 +8,13 @@ export type Hand = {
 };
 
 export const createHand = (deck: Deck): Hand => {
-  const [drawnCard0, drawnCard1, drawnCard2, ...newDeck] = deck;
+  const [drawnCard0, drawnCard1, drawnCard2, ...newDeck] = deck.cards;
 
   return {
     hand: [drawnCard0, drawnCard1, drawnCard2],
-    newDeck
+    newDeck: {
+      ...deck,
+      cards: newDeck
+    }
   };
 };

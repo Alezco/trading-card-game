@@ -1,9 +1,15 @@
 export type Card = {
   id: string;
   mana: number;
+  playerId: string;
 };
 
-export const createCard = (id: string, mana: number): Card => ({
+export const createCard = (
+  id: string,
+  mana: number,
+  playerId: string
+): Card => ({
   id,
-  mana
+  mana,
+  playerId
 });

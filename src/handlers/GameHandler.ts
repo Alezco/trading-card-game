@@ -36,10 +36,13 @@ const getNewPlayerWithPenalties = (player: Player): Player => {
   }
 
   if (isHandFull(player)) {
-    const [, ...newDeck] = player.deck;
+    const [, ...newDeck] = player.deck.cards;
     return {
       ...player,
-      deck: newDeck
+      deck: {
+        ...player.deck,
+        cards: newDeck
+      }
     };
   }
 
@@ -50,10 +53,13 @@ export const drawCard = (player: Player): Player => {
   let newPlayer;
 
   if (isDrawable(player)) {
-    const [drawnCard, ...newDeck] = player.deck;
+    const [drawnCard, ...newDeck] = player.deck.cards;
     newPlayer = {
       ...player,
-      deck: newDeck,
+      deck: {
+        ...player.deck,
+        cards: newDeck
+      },
       hand: [...player.hand, drawnCard]
     };
   } else {
