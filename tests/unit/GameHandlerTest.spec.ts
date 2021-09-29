@@ -1,5 +1,4 @@
-import { initBoard, drawCard, handleAction } from "@/handlers/GameHandler";
-// import { getPlayerById } from "@/utils/player";
+import { initBoard, drawCard } from "@/handlers/GameHandler";
 
 describe("GameHandler", () => {
   let player1, player2, context;
@@ -13,7 +12,10 @@ describe("GameHandler", () => {
         { id: "foooo", mana: 2 },
         { id: "fooo", mana: 5 }
       ],
-      deck: [{ id: "foo", mana: 2 }]
+      deck: {
+        cards: [{ id: "foo", mana: 2, playerId: "player1" }],
+        playerId: "player1"
+      }
     };
 
     player2 = {
@@ -22,7 +24,10 @@ describe("GameHandler", () => {
       health: 30,
       mana: 7,
       hand: [],
-      deck: [{ id: "foo", mana: 2 }]
+      deck: {
+        cards: [{ id: "foo", mana: 2, playerId: "player2" }],
+        playerId: "player2"
+      }
     };
 
     context = {
@@ -41,57 +46,36 @@ describe("GameHandler", () => {
     });
   });
 
-  describe("handleAction", () => {
-    it("should do nothing if player is not active (current)", () => {
-      const getPlayerById = jest.fn();
-      handleAction(context, player2.hand[0], player2.id);
-      expect(getPlayerById).not.toHaveBeenCalled();
-    });
-
-    it("should remove card from hand", () => {
-      const firstPlayerHandCardId = player1.hand[0].id;
-      handleAction(context, player1.hand[0], player1.id);
-      expect(player1.hand.find(({ id }) => id === firstPlayerHandCardId)).toBe(
-        undefined
-      );
-    });
-
-    it("should remove player mana", () => {
-      handleAction(context, player1.hand[0], player1.id);
-      expect(player1.mana).toBe(3);
-    });
-
-    it("should attack enemy", () => {
-      handleAction(context, player1.hand[0], player1.id);
-      expect(player2.health).toBe(28);
-    });
-  });
-
   describe("drawCard", () => {
     it("should draw a card from the deck to the hand", () => {
       const localPlayer = {
         ...player1,
         hand: [],
-        deck: [{ id: "foo", mana: 2 }]
+        deck: {
+          cards: [{ id: "foo", mana: 2, playerId: player1.id }],
+          playerId: player1.id
+        }
       };
       const updatedPlayer = drawCard(localPlayer);
       expect(updatedPlayer.hand.length).toBe(1);
-      expect(updatedPlayer.deck.length).toBe(0);
-      expect(updatedPlayer.hand[0]).toStrictEqual({ id: "foo", mana: 2 });
+      expect(updatedPlayer.deck.cards.length).toBe(0);
+      expect(updatedPlayer.hand[0]).toStrictEqual({
+        id: "foo",
+        mana: 2,
+        playerId: player1.id
+      });
     });
     it("should remove one health point when deck is empty", () => {
       const localPlayer = {
         ...player1,
         hand: [],
-        deck: []
+        deck: {
+          cards: [],
+          playerId: player1.id
+        }
       };
       const newPlayer = drawCard(localPlayer);
       expect(newPlayer.health).toBe(29);
-      /*try {
-        const newPlayer = drawCard(player);
-      } catch (error) {
-        expect(error).toStrictEqual(new Error("Empty deck"));
-      }*/
     });
     it("should keep 5 cards when hand is full", () => {
       const localPlayer = {
@@ -103,11 +87,14 @@ describe("GameHandler", () => {
           { id: "4", mana: 0 },
           { id: "5", mana: 1 }
         ],
-        deck: [{ id: "6", mana: 8 }]
+        deck: {
+          cards: [{ id: "6", mana: 8, playerId: player1.id }],
+          playerId: player1.id
+        }
       };
       const newPlayer = drawCard(localPlayer);
       expect(newPlayer.hand.length).toBe(5);
-      expect(newPlayer.deck.length).toBe(0);
+      expect(newPlayer.deck.cards.length).toBe(0);
     });
   });
 });

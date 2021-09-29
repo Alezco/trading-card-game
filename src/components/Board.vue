@@ -15,8 +15,7 @@
 
 <script lang="ts">
 import Player from "./Player.vue";
-import { gameLoop } from "@/handlers/GameHandler";
-import { defineComponent, onMounted, computed } from "vue";
+import { defineComponent, computed } from "vue";
 import { useStore } from "vuex";
 
 export default defineComponent({
@@ -24,23 +23,13 @@ export default defineComponent({
     Player
   },
   setup() {
-    // let context = reactive<Context>(initBoard());
     const store = useStore();
 
     const round = computed(() => store.getters.getRound);
     const players = computed(() => store.getters.getPlayers);
     const error = computed(() => store.getters.getError);
 
-    onMounted(() => {
-      gameLoop();
-    });
-
-    // watch(context, () => {
-    //   console.log(context);
-    // });
-
     return {
-      // context,
       round,
       players,
       nextRound: () => store.dispatch("endRound"),

@@ -15,7 +15,10 @@ describe("Player utils", () => {
         health: 30,
         mana: 0,
         hand: [],
-        deck: []
+        deck: {
+          cards: [],
+          playerId: "player"
+        }
       };
       expect(isDeckEmpty(player)).toBeTruthy();
     });
@@ -27,7 +30,10 @@ describe("Player utils", () => {
         health: 30,
         mana: 0,
         hand: [],
-        deck: [{ id: "Jest", mana: 8 }]
+        deck: {
+          cards: [{ id: "Jest", mana: 8, playerId: "player1" }],
+          playerId: "player1"
+        }
       };
       expect(isDeckEmpty(player)).toBeFalsy();
     });
@@ -41,13 +47,16 @@ describe("Player utils", () => {
         health: 30,
         mana: 0,
         hand: [
-          { id: "Hassan", mana: 1 },
-          { id: "Benjamin", mana: 0 },
-          { id: "Marianne", mana: 8 },
-          { id: "Julien", mana: 1 },
-          { id: "Benji", mana: 5 }
+          { id: "Hassan", mana: 1, playerId: "player1" },
+          { id: "Benjamin", mana: 0, playerId: "player1" },
+          { id: "Marianne", mana: 8, playerId: "player1" },
+          { id: "Julien", mana: 1, playerId: "player1" },
+          { id: "Benji", mana: 5, playerId: "player1" }
         ],
-        deck: []
+        deck: {
+          cards: [],
+          playerId: "player1"
+        }
       };
       expect(isHandFull(player)).toBeTruthy();
     });
@@ -59,10 +68,13 @@ describe("Player utils", () => {
         health: 30,
         mana: 0,
         hand: [
-          { id: "Hassan", mana: 1 },
-          { id: "Benjamin", mana: 0 }
+          { id: "Hassan", mana: 1, playerId: "player1" },
+          { id: "Benjamin", mana: 0, playerId: "player1" }
         ],
-        deck: [{ id: "Jest", mana: 8 }]
+        deck: {
+          cards: [{ id: "Jest", mana: 8, playerId: "player1" }],
+          playerId: "player1"
+        }
       };
       expect(isHandFull(player)).toBeFalsy();
     });
@@ -76,11 +88,14 @@ describe("Player utils", () => {
         health: 30,
         mana: 0,
         hand: [
-          { id: "Hassan", mana: 1 },
-          { id: "Benjamin", mana: 0 },
-          { id: "Benji", mana: 5 }
+          { id: "Hassan", mana: 1, playerId: "player1" },
+          { id: "Benjamin", mana: 0, playerId: "player1" },
+          { id: "Benji", mana: 5, playerId: "player1" }
         ],
-        deck: [{ id: "Hassan", mana: 1 }]
+        deck: {
+          cards: [{ id: "Hassan", mana: 1, playerId: "player1" }],
+          playerId: "player1"
+        }
       };
       expect(isDrawable(player)).toBeTruthy();
     });
@@ -92,13 +107,16 @@ describe("Player utils", () => {
         health: 30,
         mana: 0,
         hand: [
-          { id: "Hassan", mana: 1 },
-          { id: "Benjamin", mana: 0 },
-          { id: "Marianne", mana: 8 },
-          { id: "Julien", mana: 1 },
-          { id: "Benji", mana: 5 }
+          { id: "Hassan", mana: 1, playerId: "player1" },
+          { id: "Benjamin", mana: 0, playerId: "player1" },
+          { id: "Marianne", mana: 8, playerId: "player1" },
+          { id: "Julien", mana: 1, playerId: "player1" },
+          { id: "Benji", mana: 5, playerId: "player1" }
         ],
-        deck: []
+        deck: {
+          cards: [],
+          playerId: "player1"
+        }
       };
       expect(isDrawable(player)).toBeFalsy();
     });
@@ -112,11 +130,14 @@ describe("Player utils", () => {
         health: 30,
         mana: 0,
         hand: [
-          { id: "Hassan", mana: 1 },
-          { id: "Benjamin", mana: 0 },
-          { id: "Benji", mana: 5 }
+          { id: "Hassan", mana: 1, playerId: "player1" },
+          { id: "Benjamin", mana: 0, playerId: "player1" },
+          { id: "Benji", mana: 5, playerId: "player1" }
         ],
-        deck: [{ id: "Benjamin", mana: 0 }]
+        deck: {
+          cards: [{ id: "Benjamin", mana: 0, playerId: "player1" }],
+          playerId: "player1"
+        }
       };
       const player2 = {
         id: "player2",
@@ -124,11 +145,14 @@ describe("Player utils", () => {
         health: 30,
         mana: 0,
         hand: [
-          { id: "Hassan", mana: 1 },
-          { id: "Benjamin", mana: 0 },
-          { id: "Benji", mana: 5 }
+          { id: "Hassan", mana: 1, playerId: "player1" },
+          { id: "Benjamin", mana: 0, playerId: "player1" },
+          { id: "Benji", mana: 5, playerId: "player1" }
         ],
-        deck: [{ id: "Hassan", mana: 1 }]
+        deck: {
+          cards: [{ id: "Hassan", mana: 1, playerId: "player1" }],
+          playerId: "player2"
+        }
       };
       const players = { player1, player2 };
 
@@ -142,11 +166,14 @@ describe("Player utils", () => {
         health: 30,
         mana: 0,
         hand: [
-          { id: "Hassan", mana: 1 },
-          { id: "Benjamin", mana: 0 },
-          { id: "Benji", mana: 5 }
+          { id: "Hassan", mana: 1, playerId: "player1" },
+          { id: "Benjamin", mana: 0, playerId: "player1" },
+          { id: "Benji", mana: 5, playerId: "player1" }
         ],
-        deck: [{ id: "Benjamin", mana: 0 }]
+        deck: {
+          cards: [{ id: "Benjamin", mana: 0, playerId: "player1" }],
+          playerId: "player1"
+        }
       };
       const player2 = {
         id: "player2",
@@ -154,11 +181,14 @@ describe("Player utils", () => {
         health: 30,
         mana: 0,
         hand: [
-          { id: "Hassan", mana: 1 },
-          { id: "Benjamin", mana: 0 },
-          { id: "Benji", mana: 5 }
+          { id: "Hassan", mana: 1, playerId: "player2" },
+          { id: "Benjamin", mana: 0, playerId: "player2" },
+          { id: "Benji", mana: 5, playerId: "player2" }
         ],
-        deck: [{ id: "Hassan", mana: 1 }]
+        deck: {
+          cards: [{ id: "Hassan", mana: 1, playerId: "player2" }],
+          playerId: "player2"
+        }
       };
       const players = { player1, player2 };
 
@@ -174,11 +204,14 @@ describe("Player utils", () => {
         health: 30,
         mana: 0,
         hand: [
-          { id: "Hassan", mana: 1 },
-          { id: "Benjamin", mana: 0 },
-          { id: "Benji", mana: 5 }
+          { id: "Hassan", mana: 1, playerId: "player1" },
+          { id: "Benjamin", mana: 0, playerId: "player1" },
+          { id: "Benji", mana: 5, playerId: "player1" }
         ],
-        deck: [{ id: "Benjamin", mana: 0 }]
+        deck: {
+          cards: [{ id: "Benjamin", mana: 0, playerId: "player1" }],
+          playerId: "player1"
+        }
       };
       const player2 = {
         id: "player2",
@@ -186,11 +219,14 @@ describe("Player utils", () => {
         health: 30,
         mana: 0,
         hand: [
-          { id: "Hassan", mana: 1 },
-          { id: "Benjamin", mana: 0 },
-          { id: "Benji", mana: 5 }
+          { id: "Hassan", mana: 1, playerId: "player2" },
+          { id: "Benjamin", mana: 0, playerId: "player2" },
+          { id: "Benji", mana: 5, playerId: "player2" }
         ],
-        deck: [{ id: "Hassan", mana: 1 }]
+        deck: {
+          cards: [{ id: "Hassan", mana: 1, playerId: "player2" }],
+          playerId: "player2"
+        }
       };
       const players = { player1, player2 };
 
@@ -204,11 +240,14 @@ describe("Player utils", () => {
         health: 30,
         mana: 0,
         hand: [
-          { id: "Hassan", mana: 1 },
-          { id: "Benjamin", mana: 0 },
-          { id: "Benji", mana: 5 }
+          { id: "Hassan", mana: 1, playerId: "player1" },
+          { id: "Benjamin", mana: 0, playerId: "player1" },
+          { id: "Benji", mana: 5, playerId: "player1" }
         ],
-        deck: [{ id: "Benjamin", mana: 0 }]
+        deck: {
+          cards: [{ id: "Benjamin", mana: 0, playerId: "player1" }],
+          playerId: "player1"
+        }
       };
       const player2 = {
         id: "player2",
@@ -216,11 +255,14 @@ describe("Player utils", () => {
         health: 30,
         mana: 0,
         hand: [
-          { id: "Hassan", mana: 1 },
-          { id: "Benjamin", mana: 0 },
-          { id: "Benji", mana: 5 }
+          { id: "Hassan", mana: 1, playerId: "player2" },
+          { id: "Benjamin", mana: 0, playerId: "player2" },
+          { id: "Benji", mana: 5, playerId: "player2" }
         ],
-        deck: [{ id: "Hassan", mana: 1 }]
+        deck: {
+          cards: [{ id: "Hassan", mana: 1, playerId: "player2" }],
+          playerId: "player2"
+        }
       };
       const players = { player1, player2 };
 

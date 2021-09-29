@@ -1,17 +1,14 @@
 import { createPlayer, Player } from "@/models/Player";
 import {
   canPlayerPlayCard,
-  getNextPlayer,
-  getPlayerById,
   isDeckEmpty,
   isDrawable,
   isHandFull,
   removePlayerMana
 } from "@/utils/player";
 import { removeHandCard } from "@/utils/hand";
-import { Context, Steps } from "@/types/types";
+import { Context } from "@/types/types";
 import { Card } from "@/models/Card";
-import { useStore } from "vuex";
 
 const MAX_MANA = 10;
 
@@ -92,81 +89,9 @@ export const playCard = (player: Player, card: Card) => {
   return { updatedPlayer };
 };
 
-export const initRound = (context: Context): Context => {
-  // TODO : Check reactivity on player after handleHand and HandleMana funcs
-  let activePlayer = getPlayerById(context.players, context.activePlayerId);
-
-  // activePlayer = Object.assign(handleHand(activePlayer), activePlayer);
-  // console.log('afterHandleHand', activePlayer);
-  activePlayer = handleMana(activePlayer);
-  // console.log('afterHandleMana', activePlayer);
-
-  const nextPlayer = getNextPlayer(context.players, context.activePlayerId);
-
-  return {
-    ...context,
-    players: {
-      [activePlayer.id]: activePlayer,
-      [nextPlayer.id]: nextPlayer
-    }
-  };
-};
-
 export const startPlayerRound = (player: Player): Player => {
   let handledPlayer;
   handledPlayer = handleHand(player);
   handledPlayer = handleMana(handledPlayer);
   return handledPlayer;
-};
-
-export const playerActions = (context: Context): Context => {
-  return context;
-};
-
-export const endRound = (context: Context): Context => {
-  const previousPlayer = getPlayerById(context.players, context.activePlayerId);
-  const nextPlayer = getNextPlayer(context.players, context.activePlayerId);
-
-  return {
-    round: context.round + 1,
-    players: {
-      [previousPlayer.id]: previousPlayer,
-      [nextPlayer.id]: nextPlayer
-    },
-    activePlayerId: nextPlayer.id,
-    error: null
-  };
-};
-
-const steps: Steps = {
-  initRound: {
-    label: "initRound",
-    method: initRound
-  },
-  playerActions: {
-    label: "playerActions",
-    method: playerActions
-  },
-  endRound: {
-    label: "endRound",
-    method: endRound
-  }
-};
-
-export const gameLoop = () => {
-  const store = useStore();
-
-  store.dispatch("initRound");
-
-  // let finalContext = context;
-
-  // Object.values(steps).forEach(({ label: stepLabel, method: stepMethod }) => {
-  //   console.log(`--------------------${stepLabel}---------------------`);
-  //   console.log("before step", finalContext);
-  //   finalContext = stepMethod(finalContext);
-  //   console.log("after step", finalContext);
-  //   console.log(`--------------------/${stepLabel}---------------------`);
-  // });
-
-  // return finalContext;
 };
