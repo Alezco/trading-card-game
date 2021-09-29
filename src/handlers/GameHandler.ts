@@ -6,14 +6,11 @@ import {
   isDeckEmpty,
   isDrawable,
   isHandFull,
-  removePlayerHealth,
   removePlayerMana
 } from "@/utils/player";
-import { isActivePlayer } from "@/utils/context";
 import { removeHandCard } from "@/utils/hand";
 import { Context, Steps } from "@/types/types";
 import { Card } from "@/models/Card";
-import { createToast } from "mosha-vue-toastify";
 import { useStore } from "vuex";
 
 const MAX_MANA = 10;
@@ -70,7 +67,6 @@ export const drawCard = (player: Player): Player => {
 };
 
 const handleHand = (player: Player): Player => {
-  console.log(player);
   return drawCard(player);
 };
 
@@ -81,14 +77,8 @@ const handleMana = (player: Player): Player => {
   };
 };
 
-// export const playCard = (player: Player, card: Card, context: Context) => {
-//   player.mana = removePlayerMana(player.mana, card.mana);
-//   player.hand = removeHandCard(player.hand, card.id);
-//   const nextPlayer = getNextPlayer(context.players, context.activePlayerId);
-//   nextPlayer.health = removePlayerHealth(nextPlayer.health, card.mana);
-// };
 export const playCard = (player: Player, card: Card) => {
-  const newPlayer = { ...player };
+  const updatedPlayer = { ...player };
   if (!canPlayerPlayCard(player, card)) {
     return {
       error: {
@@ -97,35 +87,10 @@ export const playCard = (player: Player, card: Card) => {
     };
   }
 
-  newPlayer.mana = removePlayerMana(newPlayer.mana, card.mana);
-  newPlayer.hand = removeHandCard(newPlayer.hand, card.id);
-  return { newPlayer };
+  updatedPlayer.mana = removePlayerMana(updatedPlayer.mana, card.mana);
+  updatedPlayer.hand = removeHandCard(updatedPlayer.hand, card.id);
+  return { updatedPlayer };
 };
-
-export const handleAction = (
-  context: Context,
-  card: Card,
-  playerId: string
-) => {
-  return true;
-};
-// export const handleAction = (
-//   context: Context,
-//   card: Card,
-//   playerId: string
-// ) => {
-//   if (isActivePlayer(playerId, context.activePlayerId)) {
-//     const player = getPlayerById(context.players, playerId);
-//     if (canPlayerPlayCard(player, card)) {
-//       playCard(player, card, context);
-//       createToast(`La carte ${card.id} a été jouée`);
-//     } else {
-//       createToast("Tu n'as pas assez de mana", { type: "danger" });
-//     }
-//   } else {
-//     createToast("ISSOU C'EST PAS A TOI", { type: "danger" });
-//   }
-// };
 
 export const initRound = (context: Context): Context => {
   // TODO : Check reactivity on player after handleHand and HandleMana funcs

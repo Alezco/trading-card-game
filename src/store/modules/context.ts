@@ -1,12 +1,7 @@
 import { Context } from "../../types/types";
 import { createPlayer } from "../../models/Player";
-import {
-  gameLoop,
-  initRound,
-  startPlayerRound,
-  playCard
-} from "@/handlers/GameHandler";
-import { getNextPlayer } from "@/utils/player";
+import { startPlayerRound, playCard } from "@/handlers/GameHandler";
+import { getNextPlayer, removePlayerHealth } from "@/utils/player";
 
 const player1 = createPlayer("Marianne");
 const player2 = createPlayer("Hassan");
@@ -55,7 +50,7 @@ const setters = {
  * 1.2 - gérer le mana -- DONE
  * 2 - le tour du joueur
  * 2.1 - joue une carte - DONE
- * 2.1.1 - Vérifier que la bonne carte est jouée --> Card.ts (Add playerId in card values)
+ * 2.1.1 - Vérifier que la bonne carte est jouée DONE
  * 3 - passer son tour -- DONE
  */
 
@@ -64,12 +59,17 @@ const actions = {
     commit("updatePlayer", startPlayerRound(getters.getActivePlayer));
   },
   playCard: ({ commit, getters }, card) => {
-    console.log(`playing card`, card);
-
-    const { error, newPlayer } = playCard(getters.getActivePlayer, card);
+    const { error, updatedPlayer } = playCard(getters.getActivePlayer, card);
 
     commit("updateError", error);
-    if (!error) commit("updatePlayer", newPlayer);
+    if (error) return;
+    commit("updatePlayer", updatedPlayer);
+    const nextPlayer = getNextPlayer(
+      getters.getPlayers,
+      getters.getActivePlayer.id
+    );
+    const nextPlayerHealth = removePlayerHealth(nextPlayer.health, card.mana);
+    commit("updatePlayer", { ...nextPlayer, health: nextPlayerHealth });
   },
   endRound: ({ commit, getters, dispatch }) => {
     const { id } = getNextPlayer(
