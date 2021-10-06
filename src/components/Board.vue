@@ -10,7 +10,11 @@
       :context="context"
     />
   </div>
-  Error {{ error }}
+  <div v-if="error">Error {{ error }}</div>
+  <div class="winner-block" v-if="winner">
+    Le Vainqueur est : <br />
+    {{ winner.name }}
+  </div>
 </template>
 
 <script lang="ts">
@@ -28,12 +32,14 @@ export default defineComponent({
     const round = computed(() => store.getters.getRound);
     const players = computed(() => store.getters.getPlayers);
     const error = computed(() => store.getters.getError);
+    const winner = computed(() => store.getters.getWinner);
 
     return {
       round,
       players,
       nextRound: () => store.dispatch("endRound"),
-      error
+      error,
+      winner
     };
   }
 });
@@ -44,5 +50,22 @@ export default defineComponent({
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+}
+
+.winner-block {
+  align-items: center;
+  background: green;
+  border-radius: 5px;
+  color: white;
+  display: flex;
+  font-size: 36px;
+  font-weight: 800;
+  height: 50vh;
+  justify-content: center;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate3d(-50%, -50%, 0);
+  width: 50vw;
 }
 </style>

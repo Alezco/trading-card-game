@@ -20,7 +20,8 @@ export const initBoard = (): Context => {
     round: 1,
     players: { [player1.id]: player1, [player2.id]: player2 },
     activePlayerId: player1.id,
-    error: null
+    error: null,
+    winner: null
   };
 };
 

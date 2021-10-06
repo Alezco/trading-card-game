@@ -11,4 +11,5 @@ export type Context = {
   players: Players;
   activePlayerId: string | null;
   error: Error | null;
+  winner: string | null;
 };

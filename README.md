@@ -32,9 +32,8 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ### TODO
 
-- Pistes de réflexion : Fonctionnel pose soucis par rapport au reactif + ajouter le step dans le context et executer le bon step dans le gameloop (revoir le gameloop) + mettre un store ?
-- Compléter la gestion de la pioche
 - Mettre le projet sur GitHub Pages
 - Ajouter des GitHub Actions
-- Ajouter un back-end
+- Ajouter un back-end (NODE JS ?)
+- AJOUTER DU TEMPS REEL ENTRE 2 JOUEURS ? 
 - Ajouter un système de classement

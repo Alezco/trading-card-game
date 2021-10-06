@@ -13,7 +13,8 @@ const state = (): Context => ({
     [player2.id]: player2
   },
   activePlayerId: player1.id,
-  error: null
+  error: null,
+  winner: null
 });
 
 // getters
@@ -30,7 +31,8 @@ const getters = {
   getPlayers: state => {
     return state.players;
   },
-  getError: state => state.error
+  getError: state => state.error,
+  getWinner: state => state.players[state.winner]
 };
 
 // setters
@@ -42,33 +44,31 @@ const setters = {
   }
 };
 
-/**
- * Les actions d'un TCG :
- *
- * 1 - mise en place du tour d'un joueur
- * 1.1 - Piocher -- DONE
- * 1.2 - gérer le mana -- DONE
- * 2 - le tour du joueur
- * 2.1 - joue une carte - DONE
- * 2.1.1 - Vérifier que la bonne carte est jouée DONE
- * 3 - passer son tour -- DONE
- */
+// TODO
+// quand un joueur joue une carte ouvrir un gif aleatoir de yugiho qui pose une carte
 
 const actions = {
   initRound: ({ commit, getters }) => {
     commit("updatePlayer", startPlayerRound(getters.getActivePlayer));
   },
-  playCard: ({ commit, getters }, card) => {
+  playCard: ({ commit, getters, dispatch }, card) => {
     const { error, updatedPlayer } = playCard(getters.getActivePlayer, card);
 
     commit("updateError", error);
     if (error) return;
     commit("updatePlayer", updatedPlayer);
+
     const nextPlayer = getNextPlayer(
       getters.getPlayers,
       getters.getActivePlayer.id
     );
-    const nextPlayerHealth = removePlayerHealth(nextPlayer.health, card.mana);
+
+    let nextPlayerHealth = removePlayerHealth(nextPlayer.health, card.mana);
+
+    if (nextPlayerHealth <= 0) {
+      nextPlayerHealth = 0;
+      dispatch("handleEndgame");
+    }
     commit("updatePlayer", { ...nextPlayer, health: nextPlayerHealth });
   },
   endRound: ({ commit, getters, dispatch }) => {
@@ -79,6 +79,9 @@ const actions = {
     commit("updateRound");
     commit("updateActivePlayerId", id);
     dispatch("initRound");
+  },
+  handleEndgame({ commit, getters }) {
+    commit("updateWinner", getters.getActivePlayerId);
   }
 };
 
@@ -97,6 +100,9 @@ const mutations = {
   },
   updateActivePlayerId: (state, payload) => {
     state.activePlayerId = payload;
+  },
+  updateWinner: (state, payload) => {
+    state.winner = payload;
   }
 };
 
