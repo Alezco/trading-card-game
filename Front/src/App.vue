@@ -3,13 +3,25 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, inject } from "vue";
 import Board from "./components/Board.vue";
 
 export default defineComponent({
   name: "App",
   components: {
     Board
+  },
+  inject: ["webSocket"],
+  setup() {
+    // @todo: Check typeScript
+    // const ws: WebSocket  = inject("webSocket");
+    // ws.onopen((event: Event) => {
+    //   console.log("ws connected!");
+    //   ws.send("something");
+    // });
+    // ws.onmessage((event: MessageEvent) => {
+    //   console.log(event);
+    // });
   }
 });
 </script>
