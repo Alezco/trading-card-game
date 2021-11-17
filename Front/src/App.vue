@@ -3,7 +3,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, inject } from "vue";
+import { defineComponent, provide } from "vue";
 import Board from "./components/Board.vue";
 
 export default defineComponent({
@@ -11,17 +11,18 @@ export default defineComponent({
   components: {
     Board
   },
-  inject: ["webSocket"],
   setup() {
-    // @todo: Check typeScript
-    // const ws: WebSocket  = inject("webSocket");
-    // ws.onopen((event: Event) => {
-    //   console.log("ws connected!");
-    //   ws.send("something");
-    // });
-    // ws.onmessage((event: MessageEvent) => {
-    //   console.log(event);
-    // });
+    // @todo: Create conversation with server :D
+    const ws: WebSocket = new WebSocket("ws://127.0.0.1:8080");
+    provide("ws", ws);
+    ws.onopen = (event: Event): void => {
+      console.log("ws connected!");
+      console.log(event);
+      ws.send("something");
+    };
+    ws.onmessage = (event: MessageEvent) => {
+      console.log(event);
+    };
   }
 });
 </script>
