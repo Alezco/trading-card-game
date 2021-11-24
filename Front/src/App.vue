@@ -14,15 +14,13 @@ export default defineComponent({
   setup() {
     // @todo: Create conversation with server :D
     const ws: WebSocket = new WebSocket("ws://127.0.0.1:8080");
-    provide("ws", ws);
     ws.onopen = (event: Event): void => {
       console.log("ws connected!");
-      console.log(event);
-      ws.send("something");
     };
     ws.onmessage = (event: MessageEvent) => {
       console.log(event);
     };
+    provide("ws", ws);
   }
 });
 </script>

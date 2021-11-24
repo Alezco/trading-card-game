@@ -1,25 +1,30 @@
 <template>
   <h1>Trading Card game</h1>
-  <h4>Round: {{ round }}</h4>
-  <button @click="nextRound()">Fin du tour</button>
-  <div class="player-container">
-    <Player
-      v-for="player in players"
-      :key="player.id"
-      :player="player"
-      :context="context"
-    />
+  <div v-if="isReady">
+    <h4>Round: {{ round }}</h4>
+    <button @click="nextRound()">Fin du tour</button>
+    <div class="player-container">
+      <Player
+        v-for="player in players"
+        :key="player.id"
+        :player="player"
+        :context="context"
+      />
+    </div>
+    <div v-if="error">Error {{ error }}</div>
+    <div class="winner-block" v-if="winner">
+      Le Vainqueur est : <br />
+      {{ winner.name }}
+    </div>
   </div>
-  <div v-if="error">Error {{ error }}</div>
-  <div class="winner-block" v-if="winner">
-    Le Vainqueur est : <br />
-    {{ winner.name }}
+  <div v-else>
+    <button @click="connect()">Se connecter</button>
   </div>
 </template>
 
 <script lang="ts">
 import Player from "./Player.vue";
-import { defineComponent, computed } from "vue";
+import { defineComponent, computed, inject, ref } from "vue";
 import { useStore } from "vuex";
 
 export default defineComponent({
@@ -34,12 +39,27 @@ export default defineComponent({
     const error = computed(() => store.getters.getError);
     const winner = computed(() => store.getters.getWinner);
 
+    const ws: WebSocket = inject("ws");
+    const isReady = ref(false);
+
+    const connect = () => {
+      if (ws?.readyState) {
+        ws.send(JSON.stringify({
+          round: round.value,
+          players: players.value,
+        }));
+        isReady.value = true;
+      }
+    }
+
     return {
       round,
       players,
       nextRound: () => store.dispatch("endRound"),
+      connect,
       error,
-      winner
+      winner,
+      isReady
     };
   }
 });
