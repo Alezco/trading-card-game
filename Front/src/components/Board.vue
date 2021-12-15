@@ -42,6 +42,11 @@ export default defineComponent({
     const ws: WebSocket = inject("ws");
     const isReady = ref(false);
 
+    // TODO:
+    //   - Envoyé au Back Mes Infos Player
+    //   - Récupérer les Infos du Player adverse (au tour, au jeux.. etc. la totale quoi)
+    //   - Hydrater le store
+
     const connect = () => {
       if (ws?.readyState) {
         ws.send(JSON.stringify({

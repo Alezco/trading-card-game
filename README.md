@@ -37,3 +37,9 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 - Ajouter un back-end (NODE JS ?)
 - AJOUTER DU TEMPS REEL ENTRE 2 JOUEURS ? 
 - Ajouter un système de classement
+
+
+# Back
+Made with deno
+## Launch
+deno run --allow-net index.ts
