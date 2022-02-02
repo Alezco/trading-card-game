@@ -1,18 +1,11 @@
 import { Context } from "../../types/types";
-import { createPlayer } from "../../models/Player";
 import { startPlayerRound, playCard } from "@/handlers/GameHandler";
 import { getNextPlayer, removePlayerHealth } from "@/utils/player";
 
-const player1 = createPlayer("Marianne");
-const player2 = createPlayer("Hassan");
-
 const state = (): Context => ({
   round: 1,
-  players: {
-    [player1.id]: player1,
-    [player2.id]: player2
-  },
-  activePlayerId: player1.id,
+  players: {},
+  activePlayerId: null,
   error: null,
   winner: null
 });

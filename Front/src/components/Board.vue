@@ -1,24 +1,35 @@
 <template>
-  <h1>Trading Card game</h1>
-  <div v-if="isReady">
-    <h4>Round: {{ round }}</h4>
-    <button @click="nextRound()">Fin du tour</button>
-    <div class="player-container">
-      <Player
-        v-for="player in players"
-        :key="player.id"
-        :player="player"
-        :context="context"
-      />
+  <div>
+    <h1>Trading Card game</h1>
+    <div v-if="gameState === GameState.PLAYING">
+      <h4>Round: {{ round }}</h4>
+      <button @click="nextRound()">Fin du tour</button>
+      <div class="player-container">
+        <Player
+          v-for="player in players"
+          :key="player.id"
+          :player="player"
+          :context="context"
+        />
+      </div>
+      <div v-if="error">Error {{ error }}</div>
+      <div class="winner-block" v-if="winner">
+        Le Vainqueur est : <br />
+        {{ winner.name }}
+      </div>
     </div>
-    <div v-if="error">Error {{ error }}</div>
-    <div class="winner-block" v-if="winner">
-      Le Vainqueur est : <br />
-      {{ winner.name }}
+    <div v-else>
+      <!-- START Login Component -->
+      <label for="playerName">Pseudo</label>
+      <input 
+        v-model="playerName" 
+        id="playerName"
+        name="playerName" 
+        type="text"
+      >
+      <button @click="connect()">Se connecter</button>
+      <!-- END Login Component -->
     </div>
-  </div>
-  <div v-else>
-    <button @click="connect()">Se connecter</button>
   </div>
 </template>
 
@@ -26,6 +37,8 @@
 import Player from "./Player.vue";
 import { defineComponent, computed, inject, ref } from "vue";
 import { useStore } from "vuex";
+import { createPlayer } from "../models/Player"
+import { GameState } from "../utils/context"
 
 export default defineComponent({
   components: {
@@ -40,7 +53,8 @@ export default defineComponent({
     const winner = computed(() => store.getters.getWinner);
 
     const ws: WebSocket = inject("ws");
-    const isReady = ref(false);
+    const gameState = ref(GameState.INIT);
+    const playerName = ref('')
 
     // TODO:
     //   - Envoyé au Back Mes Infos Player
@@ -48,23 +62,30 @@ export default defineComponent({
     //   - Hydrater le store
 
     const connect = () => {
-      if (ws?.readyState) {
-        ws.send(JSON.stringify({
-          round: round.value,
-          players: players.value,
-        }));
-        isReady.value = true;
-      }
+      if(!ws?.readyState) return
+      const player = createPlayer(playerName.value)
+      ws.send(JSON.stringify({
+        round: round.value,
+        players: {
+          [player.id]: player
+        },
+      }));
+      gameState.value = GameState.WAITING;
+      // TODO: Demander au seveur si un adversaire est déjà connecter
+      //  - Si on a un autre adversaire on passe gameState = GameState.PLAYING
+      // Coté Back enregister la connexion d'un player
+      //  - renvoyer les players à chaque connexion
     }
 
     return {
       round,
+      playerName,
       players,
       nextRound: () => store.dispatch("endRound"),
       connect,
       error,
       winner,
-      isReady
+      gameState,
     };
   }
 });
